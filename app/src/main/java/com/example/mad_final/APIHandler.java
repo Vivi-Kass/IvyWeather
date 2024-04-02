@@ -2,8 +2,12 @@ package com.example.mad_final;
 
 import static android.content.ContentValues.TAG;
 
+import static java.lang.Boolean.FALSE;
+
+import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -22,9 +26,12 @@ public class APIHandler {
 
     private String api = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation";
     private Handler handler;
+    private Context context;
+    private JSONObject jsondata;
 
-    public APIHandler(Handler newHandler) {
+    public APIHandler(Handler newHandler, Context newContext) {
         handler = newHandler;
+        context = newContext;
     }
 
 
@@ -33,27 +40,33 @@ public class APIHandler {
         DataHandler dataHandler = new DataHandler();
         Thread downloaderThread = new Thread(dataHandler);
         downloaderThread.start();
-
-
     }
 
     public class DataHandler implements Runnable {
         @Override
         public void run() {
 
-            JSONObject result = null;
             ExecutorService executorService = Executors.newSingleThreadExecutor();
 
             Future<JSONObject> downloadFuture = executorService.submit(new DataFetcher());
             try {
-                result = downloadFuture.get();
+                jsondata = downloadFuture.get();
             }
             catch (Exception e)
             {
                 Log.d(TAG, "Exception occurred when downloading data: " + e.getMessage());
             }
 
+            if (jsondata != null) //only display if an error occured
+            {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "JSON Data Acquired", Toast.LENGTH_SHORT).show();
 
+                    }
+                });
+            }
 
 
         }

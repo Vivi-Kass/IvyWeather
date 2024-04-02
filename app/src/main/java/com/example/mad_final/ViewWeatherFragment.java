@@ -38,7 +38,7 @@ public class ViewWeatherFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        APIHandler apiHandler = new APIHandler(handler);
+        APIHandler apiHandler = new APIHandler(handler, getContext());
         apiHandler.getWeather();
 
 
