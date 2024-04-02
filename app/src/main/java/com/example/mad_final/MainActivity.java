@@ -1,3 +1,11 @@
+/*
+ * FILE :            MainActivity.java
+ * PROJECT :         PROG3150 - Project
+ * PROGRAMMER :      Vivian Morton, Isaac Ribeiro Leao
+ * FIRST VERSION :   2024 - 04 - 02
+ * DESCRIPTION :     Contains the logic for the main activity
+ */
+
 package com.example.mad_final;
 
 import static android.content.ContentValues.TAG;

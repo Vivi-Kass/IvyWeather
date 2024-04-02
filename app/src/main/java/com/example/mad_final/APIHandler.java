@@ -1,16 +1,19 @@
+/*
+ * FILE :            APIHandler.java
+ * PROJECT :         PROG3150 - Project
+ * PROGRAMMER :      Vivian Morton, Isaac Ribeiro Leao
+ * FIRST VERSION :   2024 - 04 - 02
+ * DESCRIPTION :     Contains the logic getting the JSONObject that contains the weather
+ */
+
 package com.example.mad_final;
 
 import static android.content.ContentValues.TAG;
-
-import static java.lang.Boolean.FALSE;
-
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
-
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;

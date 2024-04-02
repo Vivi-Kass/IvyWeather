@@ -1,3 +1,11 @@
+/*
+ * FILE :            ViewWeatherFragment.java
+ * PROJECT :         PROG3150 - Project
+ * PROGRAMMER :      Vivian Morton, Isaac Ribeiro Leao
+ * FIRST VERSION :   2024 - 04 - 02
+ * DESCRIPTION :     Contains the logic for the view weather fragment. Such as using the APIHandler
+ */
+
 package com.example.mad_final;
 
 import android.os.Bundle;
@@ -9,11 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ViewWeatherFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ViewWeatherFragment extends Fragment {
 
     private Handler handler = new Handler();
