@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -34,6 +35,7 @@ public class ViewWeatherFragment extends Fragment {
 
     private Handler handler = new Handler();
     private FusedLocationProviderClient fusedLocationClient;
+    private Location resultLocation;
 
 
     public ViewWeatherFragment() {
@@ -70,7 +72,7 @@ public class ViewWeatherFragment extends Fragment {
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
-                            // Logic to handle location object
+                            resultLocation = location;
                         }
                     }
 
@@ -82,7 +84,11 @@ public class ViewWeatherFragment extends Fragment {
                     }
                 });
 
-
+        if (resultLocation != null)
+        {
+            Toast.makeText(requireContext(), "Latitude: " + String.valueOf(resultLocation.getLatitude()), Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Longitude: " +String.valueOf(resultLocation.getLongitude()), Toast.LENGTH_SHORT).show();
+        }
         return inflater.inflate(R.layout.fragment_view_weather, container, false);
     }
 }
