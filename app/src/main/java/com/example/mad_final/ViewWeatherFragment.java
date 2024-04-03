@@ -35,7 +35,6 @@ public class ViewWeatherFragment extends Fragment {
 
     private Handler handler = new Handler();
     private FusedLocationProviderClient fusedLocationClient;
-    private Location resultLocation;
 
 
     public ViewWeatherFragment() {
@@ -56,24 +55,25 @@ public class ViewWeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        APIHandler apiHandler = new APIHandler(handler, getContext());
-        apiHandler.getWeather();
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-
         if (ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), new String[] { android.Manifest.permission.ACCESS_FINE_LOCATION }, 0);
             ActivityCompat.requestPermissions(requireActivity(), new String[] { Manifest.permission.ACCESS_COARSE_LOCATION }, 1);
 
         }
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(requireActivity(), new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
-                            resultLocation = location;
+                            Toast.makeText(requireContext(), "Latitude: " + String.valueOf(location.getLatitude()), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Longitude: " +String.valueOf(location.getLongitude()), Toast.LENGTH_SHORT).show();
+
+                            APIHandler apiHandler = new APIHandler(handler, getContext(), location);
+
                         }
+
                     }
 
                 })
@@ -84,11 +84,6 @@ public class ViewWeatherFragment extends Fragment {
                     }
                 });
 
-        if (resultLocation != null)
-        {
-            Toast.makeText(requireContext(), "Latitude: " + String.valueOf(resultLocation.getLatitude()), Toast.LENGTH_SHORT).show();
-            Toast.makeText(requireContext(), "Longitude: " +String.valueOf(resultLocation.getLongitude()), Toast.LENGTH_SHORT).show();
-        }
         return inflater.inflate(R.layout.fragment_view_weather, container, false);
     }
 }

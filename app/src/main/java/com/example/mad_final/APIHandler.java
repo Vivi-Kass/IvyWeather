@@ -10,6 +10,7 @@ package com.example.mad_final;
 
 import static android.content.ContentValues.TAG;
 import android.content.Context;
+import android.location.Location;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
@@ -31,19 +32,50 @@ public class APIHandler {
     private Handler handler;
     private Context context;
     private JSONObject jsondata;
+    private Location location;
 
-    public APIHandler(Handler newHandler, Context newContext) {
+    public APIHandler(Handler newHandler, Context newContext, Location newLocation) {
         handler = newHandler;
         context = newContext;
-    }
-
-
-    public void getWeather()
-    {
+        location = newLocation;
         DataHandler dataHandler = new DataHandler();
         Thread downloaderThread = new Thread(dataHandler);
         downloaderThread.start();
     }
+
+    public Location getLocation()
+    {
+        return location;
+    }
+
+    public JSONObject getData()
+    {
+        if (jsondata != null)
+        {
+            return  jsondata;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public class UpdateUI implements Runnable
+    {
+        @Override
+        public void run()
+        {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, "JSON Data Acquired", Toast.LENGTH_SHORT).show();
+                    //put code to update ui with data here!
+                }
+            });
+        }
+    }
+
+
 
     public class DataHandler implements Runnable {
         @Override
@@ -62,13 +94,9 @@ public class APIHandler {
 
             if (jsondata != null) //only display if an error occured
             {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(context, "JSON Data Acquired", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
+                UpdateUI updateUI  = new UpdateUI();
+                Thread downloaderThread = new Thread(updateUI);
+                downloaderThread.start();
             }
 
 
