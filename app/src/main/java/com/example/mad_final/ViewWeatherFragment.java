@@ -8,6 +8,8 @@
 
 package com.example.mad_final;
 
+import static android.content.ContentValues.TAG;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -92,53 +94,11 @@ public class ViewWeatherFragment extends Fragment {
 
         }
 
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-        fusedLocationClient.getLastLocation()
-
-
-                .addOnSuccessListener(requireActivity(), new OnSuccessListener<Location>() {
-
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onSuccess(Location location) {
-                        String longitude = Double.toString(location.getLongitude());
-                        String latitude = Double.toString(location.getLatitude());
-                        userLatitude.setText("Lat: " + longitude);
-                        userLongitude.setText("Lon: " + latitude);
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            Toast.makeText(requireContext(), "Latitude: " + String.valueOf(location.getLatitude()), Toast.LENGTH_SHORT).show();
-                            Toast.makeText(requireContext(), "Longitude: " +String.valueOf(location.getLongitude()), Toast.LENGTH_SHORT).show();
-
-                            //Log information so it can be compared later
-                            Log.d("ApplicationLatitude", latitude);
-                            Log.d("ApplicationLongitude", longitude);
-                            userLocation = getCurrentLocation(location.getLatitude(),location.getLongitude() , requireContext());
-
-                            if (userLocation != null) {
-                                Toast.makeText(getContext(), "Current location: " + userLocation, Toast.LENGTH_LONG).show();
-                                userLocTV.setText("City: " + userLocation);
-                            }
-                            APIHandler apiHandler = new APIHandler(handler, getContext(), location, new APIHandler.WeatherDataListener() {
-                                @Override
-                                public void onDataFetched(JSONObject jsonData) {
-                                   //Once Json data is fetched, update UI
-                                    updateTempwithJson(jsonData);
-                                }
-                            });
-
-                        }
-
-                    }
-
-                })
-                .addOnFailureListener(requireActivity(), new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("ViewWeatherFragment", "Failed to get location");
-                    }
-                });
+        //Permission granted
+        if(ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {
+            getLocation();
+        }
 
         return rootView;
     }
@@ -178,6 +138,62 @@ public class ViewWeatherFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void getLocation()
+    {
+        try {
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(requireActivity(), new OnSuccessListener<Location>() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onSuccess(Location location) {
+                    String longitude = Double.toString(location.getLongitude());
+                    String latitude = Double.toString(location.getLatitude());
+                    userLatitude.setText("Lat: " + longitude);
+                    userLongitude.setText("Lon: " + latitude);
+                    // Got last known location. In some rare situations this can be null.
+                    if (location != null) {
+                        //Toast.makeText(requireContext(), "Latitude: " + String.valueOf(location.getLatitude()), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(requireContext(), "Longitude: " +String.valueOf(location.getLongitude()), Toast.LENGTH_SHORT).show();
+
+                        //Log information so it can be compared later
+                        Log.d("ApplicationLatitude", latitude);
+                        Log.d("ApplicationLongitude", longitude);
+                        userLocation = getCurrentLocation(location.getLatitude(),location.getLongitude() , requireContext());
+
+                        if (userLocation != null) {
+                            //Toast.makeText(getContext(), "Current location: " + userLocation, Toast.LENGTH_LONG).show();
+                            userLocTV.setText("City: " + userLocation);
+                        }
+                        APIHandler apiHandler = new APIHandler(handler, getContext(), location, new APIHandler.WeatherDataListener() {
+                            @Override
+                            public void onDataFetched(JSONObject jsonData) {
+                                //Once Json data is fetched, update UI
+                                updateTempwithJson(jsonData);
+                            }
+                        });
+
+                    }
+
+                }
+
+            })
+                    .addOnFailureListener(requireActivity(), new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("ViewWeatherFragment", "Failed to get location");
+                        }
+                    });
+        }
+        catch (SecurityException e)
+        {
+            Log.d(TAG, "Security Exception: " + e.getMessage());
+        }
+
+
     }
 
 }

@@ -86,8 +86,9 @@ public class APIHandler {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(context, "JSON Data Acquired", Toast.LENGTH_SHORT).show();
                     //put code to update ui with data here!
+
+
                 }
             });
         }
@@ -115,9 +116,9 @@ public class APIHandler {
                 if (listener != null) {
                     listener.onDataFetched(jsondata);
                 }
-                UpdateUI updateUI  = new UpdateUI();
-                Thread downloaderThread = new Thread(updateUI);
-                downloaderThread.start();
+                //UpdateUI updateUI  = new UpdateUI();
+                //Thread updateUIThread = new Thread(updateUI);
+                //updateUIThread.start();
             }
 
 
