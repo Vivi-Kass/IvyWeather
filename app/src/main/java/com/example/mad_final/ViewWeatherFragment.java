@@ -34,6 +34,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -48,6 +50,8 @@ public class ViewWeatherFragment extends Fragment {
     private TextView userLongitude;
 
     private TextView userLocTV;
+
+    private TextView currTemperature;
 
     private String userLocation;
     private Handler handler = new Handler();
@@ -106,6 +110,8 @@ public class ViewWeatherFragment extends Fragment {
                         if (location != null) {
                             Toast.makeText(requireContext(), "Latitude: " + String.valueOf(location.getLatitude()), Toast.LENGTH_SHORT).show();
                             Toast.makeText(requireContext(), "Longitude: " +String.valueOf(location.getLongitude()), Toast.LENGTH_SHORT).show();
+
+                            //Log information so it can be compared later
                             Log.d("ApplicationLatitude", latitude);
                             Log.d("ApplicationLongitude", longitude);
                             userLocation = getCurrentLocation(location.getLatitude(),location.getLongitude() , requireContext());
@@ -114,7 +120,13 @@ public class ViewWeatherFragment extends Fragment {
                                 Toast.makeText(getContext(), "Current location: " + userLocation, Toast.LENGTH_LONG).show();
                                 userLocTV.setText("City: " + userLocation);
                             }
-                            APIHandler apiHandler = new APIHandler(handler, getContext(), location);
+                            APIHandler apiHandler = new APIHandler(handler, getContext(), location, new APIHandler.WeatherDataListener() {
+                                @Override
+                                public void onDataFetched(JSONObject jsonData) {
+                                   //Once Json data is fetched, update UI
+                                    updateTempwithJson(jsonData);
+                                }
+                            });
 
                         }
 
@@ -132,7 +144,7 @@ public class ViewWeatherFragment extends Fragment {
     }
 
 
-    private  String getCurrentLocation(double latitude, double longitude, Context context) {
+    private String getCurrentLocation(double latitude, double longitude, Context context) {
 
         //Using geocoder and storing addresses in a list
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
@@ -150,6 +162,26 @@ public class ViewWeatherFragment extends Fragment {
         }
         return null;
     }
+
+    private void updateTempwithJson(JSONObject jsonData) {
+        try {
+           // parse through JSON to get the hourly temperature
+            double temperature = jsonData.getJSONObject("hourly").getJSONArray("temperature_2m").getDouble(0); // Adjust based on actual structure
+
+            //update UI
+            getActivity().runOnUiThread(() -> {
+
+                //get current view of the text view
+                currTemperature = getView().findViewById(R.id.current_temp);
+                currTemperature.setText(String.format(Locale.getDefault(), "Temperature: %.1f°C", temperature));
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
+
 
 

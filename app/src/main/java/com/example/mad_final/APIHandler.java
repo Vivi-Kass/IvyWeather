@@ -27,21 +27,27 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class APIHandler {
-
+    private WeatherDataListener listener;
     private String api = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation";
     private Handler handler;
     private Context context;
     private JSONObject jsondata;
     private Location location;
 
-    public APIHandler(Handler newHandler, Context newContext, Location newLocation) {
+    public APIHandler(Handler newHandler, Context newContext, Location newLocation, WeatherDataListener listener) {
         handler = newHandler;
         context = newContext;
         location = newLocation;
+        this.listener = listener;
         DataHandler dataHandler = new DataHandler();
         Thread downloaderThread = new Thread(dataHandler);
         downloaderThread.start();
     }
+
+    public interface WeatherDataListener {
+        void onDataFetched(JSONObject jsonData);
+    }
+
 
     public Location getLocation()
     {
@@ -94,6 +100,9 @@ public class APIHandler {
 
             if (jsondata != null) //only display if an error occured
             {
+                if (listener != null) {
+                    listener.onDataFetched(jsondata);
+                }
                 UpdateUI updateUI  = new UpdateUI();
                 Thread downloaderThread = new Thread(updateUI);
                 downloaderThread.start();
