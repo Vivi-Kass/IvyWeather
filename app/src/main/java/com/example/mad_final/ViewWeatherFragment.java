@@ -88,16 +88,8 @@ public class ViewWeatherFragment extends Fragment {
         userLongitude = rootView.findViewById(R.id.lon_loc);
         userLocTV = rootView.findViewById(R.id.current_location);
 
-
-        // Inflate the layout for this fragment
-        if (ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), new String[] { android.Manifest.permission.ACCESS_FINE_LOCATION }, 0);
-            ActivityCompat.requestPermissions(requireActivity(), new String[] { Manifest.permission.ACCESS_COARSE_LOCATION }, 1);
-
-        }
-
         //Permission granted
-        if(ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(requireActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        if(PermissionChecker.checkPermissions(requireActivity()))
         {
             getLocation();
         }
