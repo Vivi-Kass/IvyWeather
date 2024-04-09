@@ -32,10 +32,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/lon_loc"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="61dp"
+        android:gravity="center_horizontal"
         android:text="Temperature: --"
-        android:textSize="24sp"
         android:textColor="#000"
-        android:gravity="center_horizontal" />
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/current_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lon_loc"
+        android:layout_marginTop="22dp"
+        android:gravity="center_horizontal"
+        android:text="City: --"
+        android:textColor="#000"
+        android:textSize="24sp" />
+
 
 </RelativeLayout>

@@ -10,7 +10,10 @@ package com.example.mad_final;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -33,12 +36,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 
 public class ViewWeatherFragment extends Fragment {
 
     private TextView userLatitude;
 
     private TextView userLongitude;
+
+    private TextView userLocTV;
+
+    private String userLocation;
     private Handler handler = new Handler();
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -67,6 +78,7 @@ public class ViewWeatherFragment extends Fragment {
         // Initialize your TextViews here so they are ready for updates
         userLatitude = rootView.findViewById(R.id.lat_loc);
         userLongitude = rootView.findViewById(R.id.lon_loc);
+        userLocTV = rootView.findViewById(R.id.current_location);
 
 
         // Inflate the layout for this fragment
@@ -94,6 +106,14 @@ public class ViewWeatherFragment extends Fragment {
                         if (location != null) {
                             Toast.makeText(requireContext(), "Latitude: " + String.valueOf(location.getLatitude()), Toast.LENGTH_SHORT).show();
                             Toast.makeText(requireContext(), "Longitude: " +String.valueOf(location.getLongitude()), Toast.LENGTH_SHORT).show();
+                            Log.d("ApplicationLatitude", latitude);
+                            Log.d("ApplicationLongitude", longitude);
+                            userLocation = getCurrentLocation(location.getLatitude(),location.getLongitude() , requireContext());
+
+                            if (userLocation != null) {
+                                Toast.makeText(getContext(), "Current location: " + userLocation, Toast.LENGTH_LONG).show();
+                                userLocTV.setText("City: " + userLocation);
+                            }
                             APIHandler apiHandler = new APIHandler(handler, getContext(), location);
 
                         }
@@ -110,4 +130,26 @@ public class ViewWeatherFragment extends Fragment {
 
         return rootView;
     }
+
+
+    private  String getCurrentLocation(double latitude, double longitude, Context context) {
+
+        //Using geocoder and storing addresses in a list
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses;
+        try {
+
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (addresses != null && !addresses.isEmpty()) {
+                Address address = addresses.get(0);
+               //Got the location, return it
+                return address.getLocality();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
+
+
