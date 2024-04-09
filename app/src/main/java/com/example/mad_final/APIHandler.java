@@ -28,7 +28,12 @@ import java.util.concurrent.Future;
 
 public class APIHandler {
     private WeatherDataListener listener;
-    private String api = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation";
+    private String apiStart = "https://api.open-meteo.com/v1/forecast?";
+
+    //latitude=52.52&longitude=13.41 (Middle example)
+    private String apiEnd = "&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation";
+    private StringBuilder apiFull = new StringBuilder();
+
     private Handler handler;
     private Context context;
     private JSONObject jsondata;
@@ -38,6 +43,13 @@ public class APIHandler {
         handler = newHandler;
         context = newContext;
         location = newLocation;
+
+        //Generate the url for the api call
+        apiFull.append(apiStart); //add start
+        apiFull.append("latitude=" + location.getLatitude() + "&");
+        apiFull.append("longitude=" + location.getLongitude());
+        apiFull.append(apiEnd);
+
         this.listener = listener;
         DataHandler dataHandler = new DataHandler();
         Thread downloaderThread = new Thread(dataHandler);
@@ -121,7 +133,7 @@ public class APIHandler {
             JSONObject jsonObject = null;
 
             try {
-                URL url = new URL(api);
+                URL url = new URL(apiFull.toString());
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = httpURLConnection.getInputStream();
 
