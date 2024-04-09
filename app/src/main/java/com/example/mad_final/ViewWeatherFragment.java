@@ -41,6 +41,8 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -126,7 +128,12 @@ public class ViewWeatherFragment extends Fragment {
     private void updateTempwithJson(JSONObject jsonData) {
         try {
            // parse through JSON to get the hourly temperature
-            double temperature = jsonData.getJSONObject("hourly").getJSONArray("temperature_2m").getDouble(0); // Adjust based on actual structure
+
+            Date currentTime = Calendar.getInstance().getTime();
+
+            int hour = currentTime.getHours();
+
+            double temperature = jsonData.getJSONObject("hourly").getJSONArray("temperature_2m").getDouble(hour); // Adjust based on actual structure
 
             //update UI
             getActivity().runOnUiThread(() -> {
