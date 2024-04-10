@@ -57,23 +57,17 @@ import java.util.Locale;
 
 public class ViewWeatherFragment extends Fragment {
 
-
     private SwipeRefreshLayout swipeRefresh;
     private TextView userLatitude;
-
-    private Button toMoreDetails;
-
-    private Button refreshPage;
-
     private TextView userLongitude;
-
+    private Button toMoreDetails;
+    private Button refreshPage;
     private TextView userLocTV;
-
     private TextView currTemperature;
-
-    private String userLocation;
     private Handler handler = new Handler();
-    private FusedLocationProviderClient fusedLocationClient;
+
+    Location userLocation;
+
 
 
     public ViewWeatherFragment() {
@@ -88,7 +82,7 @@ public class ViewWeatherFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(PermissionChecker.checkPermissions(requireActivity())) {
-            getLocation();
+            //getLocation();
         }
 
     }
@@ -114,7 +108,7 @@ public class ViewWeatherFragment extends Fragment {
             public void onRefresh() {
 
                 if(PermissionChecker.checkPermissions(requireActivity())) {
-                    getLocation();
+                    //getLocation();
                     Toast.makeText(getContext(), "Page updated", Toast.LENGTH_SHORT).show();
                 }
                 swipeRefresh.setRefreshing(false);
@@ -126,7 +120,7 @@ public class ViewWeatherFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(PermissionChecker.checkPermissions(requireActivity())) {
-                    getLocation();
+                    //getLocation();
                     Toast.makeText(getContext(), "Page updated", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getContext(), "Error in fetching new info", Toast.LENGTH_SHORT).show();
@@ -157,35 +151,16 @@ public class ViewWeatherFragment extends Fragment {
         //Permission granted
         if(PermissionChecker.checkPermissions(requireActivity()))
         {
-            getLocation();
+            //getLocation();
         }
 
         return rootView;
     }
 
 
-    private String getCurrentLocation(double latitude, double longitude, Context context) {
-
-        //Using geocoder and storing addresses in a list
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        List<Address> addresses;
-        try {
-
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            if (addresses != null && !addresses.isEmpty()) {
-                Address address = addresses.get(0);
-               //Got the location, return it
-                return address.getLocality();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     private void updateTempwithJson(JSONObject jsonData) {
         try {
-           // parse through JSON to get the hourly temperature
+            // parse through JSON to get the hourly temperature
 
             Date currentTime = Calendar.getInstance().getTime();
 
@@ -205,61 +180,6 @@ public class ViewWeatherFragment extends Fragment {
         }
     }
 
-
-    private void getLocation()
-    {
-        try {
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(requireActivity(), new OnSuccessListener<Location>() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onSuccess(Location location) {
-                    String longitude = Double.toString(location.getLongitude());
-                    String latitude = Double.toString(location.getLatitude());
-                    userLatitude.setText("Lat: " + longitude);
-                    userLongitude.setText("Lon: " + latitude);
-                    // Got last known location. In some rare situations this can be null.
-                    if (location != null) {
-                        //Toast.makeText(requireContext(), "Latitude: " + String.valueOf(location.getLatitude()), Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(requireContext(), "Longitude: " +String.valueOf(location.getLongitude()), Toast.LENGTH_SHORT).show();
-
-                        //Log information so it can be compared later
-                        Log.d("ApplicationLatitude", latitude);
-                        Log.d("ApplicationLongitude", longitude);
-                        userLocation = getCurrentLocation(location.getLatitude(),location.getLongitude() , requireContext());
-
-                        if (userLocation != null) {
-                            //Toast.makeText(getContext(), "Current location: " + userLocation, Toast.LENGTH_LONG).show();
-                            userLocTV.setText("City: " + userLocation);
-                        }
-                        APIHandler apiHandler = new APIHandler(handler, getContext(), location, new APIHandler.WeatherDataListener() {
-                            @Override
-                            public void onDataFetched(JSONObject jsonData) {
-                                //Once Json data is fetched, update UI
-                                updateTempwithJson(jsonData);
-                            }
-                        });
-
-                     }
-
-                }
-
-            })
-                    .addOnFailureListener(requireActivity(), new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("ViewWeatherFragment", "Failed to get location");
-                        }
-                    });
-        }
-        catch (SecurityException e)
-        {
-            Log.d(TAG, "Security Exception: " + e.getMessage());
-        }
-
-
-    }
 
 }
 
