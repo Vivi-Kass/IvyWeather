@@ -149,7 +149,7 @@ public class CurrentWeatherFragment extends Fragment {
 
             double temperature = VIWeather.getWeatherData().getJSONObject("hourly").getJSONArray("temperature_2m").getDouble(hour); // Adjust based on actual structure
             double feelsLike = VIWeather.getWeatherData().getJSONObject("hourly").getJSONArray("apparent_temperature").getDouble(hour); // Adjust based on actual structure
-            currTemperature.setText(String.format(Locale.getDefault(), "Temperature: %.1f°C", temperature));
+            currTemperature.setText(String.format(Locale.getDefault(), " %.1f°C", temperature));
             feelsTemp.setText(String.format(Locale.getDefault(), "Feels Like: %.1f°C",  feelsLike));
             userLocTV.setText(String.format(Locale.getDefault(), "City: " + VIWeather.getCity()));
             userLatitude.setText("Latitude: " + VIWeather.getUserLocation().getLatitude());

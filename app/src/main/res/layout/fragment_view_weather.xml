@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#E3F2FD"
         android:padding="16dp">
 
         <TextView
@@ -20,11 +21,14 @@
 
         <TextView
             android:id="@+id/current_location"
-            style="@style/WeatherTS"
-            android:text="City: --"
-            android:layout_below="@id/lon_loc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"/>
+            android:layout_marginTop="32dp"
+            android:text="City: --"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#0D47A1"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/lon_loc"
@@ -35,21 +39,31 @@
             android:layout_marginTop="16dp"
             android:visibility="gone"/>
 
+
         <TextView
             android:id="@+id/current_temp"
-            style="@style/WeatherTS"
-            android:text="Temperature: --"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/current_location"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="24dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#0D47A1"
+            android:textSize="50sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/feels_temp"
-            style="@style/WeatherTS"
-            android:text="Feels like: --"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/current_temp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"/>
+            android:text="Feels like: --"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#0D47A1"
+            android:textSize="24sp"/>
+
 
 
 
@@ -75,13 +89,15 @@
 
         <Button
             android:id="@+id/more_details"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="More Details"
             android:layout_below="@id/weather_icon"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
-            android:textColor="#000000"/>
+            android:background="#BBDEFB"
+            android:text="More Details"
+            android:textColor="#0D47A1"
+            android:textAllCaps="false"
+            android:textSize="18sp"/>
 
     </RelativeLayout>
 
