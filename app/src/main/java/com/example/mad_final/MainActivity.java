@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
+import android.content.ContextWrapper;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -41,13 +42,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
     private FrameLayout framelayout;
     private TextView textView;
     private Button button;
-    private Handler handler = new Handler();
-    private Location userLocation;
-    private JSONObject weatherData;
+    private final Handler handler = new Handler();
     private FusedLocationProviderClient fusedLocationClient;
     private final String needLocation = "This app needs the location to be allowed in order to work.\n Please enable it in settings.";
 
@@ -171,19 +169,19 @@ public class MainActivity extends AppCompatActivity {
                         @SuppressLint("SetTextI18n")
                         @Override
                         public void onSuccess(Location location) {
-                            String longitude = Double.toString(location.getLongitude());
-                            String latitude = Double.toString(location.getLatitude());
+                            //String longitude = Double.toString(location.getLongitude());
+                            //String latitude = Double.toString(location.getLatitude());
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
-                                userLocation = location;
+                                VIWeather.setUserLocation(location);
                                 Log.d(TAG, "Location acquired");
-                                APIHandler apiHandler = new APIHandler(handler, getBaseContext(), userLocation, new APIHandler.WeatherDataListener() {
+                                APIHandler apiHandler = new APIHandler(handler, getBaseContext(), VIWeather.getUserLocation(), new APIHandler.WeatherDataListener() {
                                     @Override
                                     public void onDataFetched(JSONObject jsonData) {
                                         //Once Json data is fetched, update UI
-                                        weatherData = jsonData;
+                                        VIWeather.setWeatherData(jsonData);
 
-                                        String locationName = getCurrentLocationName(userLocation);
+                                        VIWeather.setCity(VIWeather.getUserLocation(), getBaseContext());
 
 
 
@@ -216,26 +214,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
-    private String getCurrentLocationName(Location location) {
-
-        //Using geocoder and storing addresses in a list
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses;
-        try {
-
-            addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            if (addresses != null && !addresses.isEmpty()) {
-                Address address = addresses.get(0);
-                //Got the location, return it
-                return address.getLocality();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
 }
