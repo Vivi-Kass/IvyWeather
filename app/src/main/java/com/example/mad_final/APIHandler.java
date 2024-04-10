@@ -32,7 +32,8 @@ public class APIHandler {
 
     //latitude=52.52&longitude=13.41 (API Middle example)
     //API end is what to grab
-    private String apiEnd = "&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation,snow_depth,cloud_cover&daily=temperature_2m_max,temperature_2m_min&timezone=auto";
+    private String apiEnd = "&hourly=temperature_2m,apparent_temperature,precipitation_probability,rain,showers,snowfall,snow_depth&daily=temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset&timezone=auto";
+            //"&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation,snow_depth,cloud_cover&daily=temperature_2m_max,temperature_2m_min&timezone=auto";
     private StringBuilder apiFull = new StringBuilder();
 
     private Handler handler;
