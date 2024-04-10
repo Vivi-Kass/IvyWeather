@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private Location userLocation;
     private JSONObject weatherData;
     private FusedLocationProviderClient fusedLocationClient;
+    private final String needLocation = "This app needs the location to be allowed in order to work.\n Please enable it in settings.";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         framelayout = findViewById(R.id.fragment_frame);
-        textView = findViewById(R.id.location_text);
+        textView = findViewById(R.id.text_info);
         button = findViewById(R.id.reload_button);
 
         //Check permissions and prompt is necessary
@@ -95,13 +96,18 @@ public class MainActivity extends AppCompatActivity {
         {
             getLocationCallAPI();
         }
+        else
+        {
+            textView.setText(needLocation);
+            button.setVisibility(View.VISIBLE);
+        }
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(PermissionChecker.checkPermissions(MainActivity.this))
                 {
-                    startCurrentWeatherFragment();
+                    getLocationCallAPI();
                 }
                 else
                 {

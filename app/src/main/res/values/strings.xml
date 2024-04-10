@@ -7,4 +7,5 @@
     <string name="current_weather">Current Weather</string>
     <string name="hourly_weather">Hourly Weather</string>
     <string name="weekly_weather">Weather this Week</string>
+    <string name="loading">Loading Please wait…</string>
 </resources>
