@@ -12,16 +12,23 @@ import static android.content.ContentValues.TAG;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.util.Log;
@@ -50,6 +57,8 @@ import java.util.Locale;
 
 public class ViewWeatherFragment extends Fragment {
 
+
+    private SwipeRefreshLayout swipeRefresh;
     private TextView userLatitude;
 
     private Button toMoreDetails;
@@ -79,7 +88,6 @@ public class ViewWeatherFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
@@ -89,12 +97,26 @@ public class ViewWeatherFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_view_weather, container, false);
 
-        // Initialize your TextViews here so they are ready for updates
+        // Initialize TextViews and buttons here so they are ready for updates
         userLatitude = rootView.findViewById(R.id.lat_loc);
         userLongitude = rootView.findViewById(R.id.lon_loc);
         userLocTV = rootView.findViewById(R.id.current_location);
         refreshPage = rootView.findViewById(R.id.refresh_info);
         toMoreDetails = rootView.findViewById(R.id.more_details);
+        swipeRefresh = rootView.findViewById(R.id.swipe_refresh_layout);
+
+
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                if(PermissionChecker.checkPermissions(requireActivity())) {
+                    getLocation();
+                    Toast.makeText(getContext(), "Page updated", Toast.LENGTH_SHORT).show();
+                }
+                swipeRefresh.setRefreshing(false);
+            }
+        });
 
 
         refreshPage.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +128,26 @@ public class ViewWeatherFragment extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "Error in fetching new info", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        toMoreDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder latlonnotification = new AlertDialog.Builder(requireActivity());
+                latlonnotification.setTitle("Location Details");
+
+                latlonnotification.setMessage("Latitude: " + userLatitude.getText().toString() + "\nLongitude: " + userLongitude.getText().toString());
+
+                latlonnotification.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                AlertDialog dialog = latlonnotification.create();
+                dialog.show();
             }
         });
 
