@@ -1,5 +1,5 @@
 /*
- * FILE :            ViewWeatherFragment.java
+ * FILE :            CurrentWeatherFragment.java
  * PROJECT :         PROG3150 - Project
  * PROGRAMMER :      Vivian Morton, Isaac Ribeiro Leao
  * FIRST VERSION :   2024 - 04 - 02
@@ -8,30 +8,15 @@
 
 package com.example.mad_final;
 
-import static android.content.ContentValues.TAG;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,23 +24,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 
-public class ViewWeatherFragment extends Fragment {
+public class CurrentWeatherFragment extends Fragment {
 
     private SwipeRefreshLayout swipeRefresh;
     private TextView userLatitude;
@@ -70,12 +47,12 @@ public class ViewWeatherFragment extends Fragment {
 
 
 
-    public ViewWeatherFragment() {
+    public CurrentWeatherFragment() {
         // Required empty public constructor
     }
 
-    public static ViewWeatherFragment newInstance(String param1, String param2) {
-        return new ViewWeatherFragment();
+    public static CurrentWeatherFragment newInstance(String param1, String param2) {
+        return new CurrentWeatherFragment();
     }
 
     @Override

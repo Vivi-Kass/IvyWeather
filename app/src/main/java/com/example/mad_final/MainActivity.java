@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -127,10 +126,10 @@ public class MainActivity extends AppCompatActivity {
         framelayout.setVisibility(View.VISIBLE);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        ViewWeatherFragment viewWeatherFragment = new ViewWeatherFragment();
-        Log.d(TAG, "App starting. Setting fragment to viewWeatherFragment");
+        CurrentWeatherFragment currentWeatherFragment = new CurrentWeatherFragment();
+        Log.d(TAG, "App starting. Setting fragment to currentWeatherFragment");
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_frame, viewWeatherFragment)
+                .replace(R.id.fragment_frame, currentWeatherFragment)
                 .commit();
     }
 
@@ -141,10 +140,10 @@ public class MainActivity extends AppCompatActivity {
         framelayout.setVisibility(View.VISIBLE);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        ViewWeatherFragment viewWeatherFragment = new ViewWeatherFragment();
-        Log.d(TAG, "App starting. Setting fragment to viewWeatherFragment");
+        CurrentWeatherFragment currentWeatherFragment = new CurrentWeatherFragment();
+        Log.d(TAG, "App starting. Setting fragment to currentWeatherFragment");
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_frame, viewWeatherFragment)
+                .replace(R.id.fragment_frame, currentWeatherFragment)
                 .commit();
     }
 
@@ -155,10 +154,10 @@ public class MainActivity extends AppCompatActivity {
         framelayout.setVisibility(View.VISIBLE);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        ViewWeatherFragment viewWeatherFragment = new ViewWeatherFragment();
-        Log.d(TAG, "App starting. Setting fragment to viewWeatherFragment");
+        CurrentWeatherFragment currentWeatherFragment = new CurrentWeatherFragment();
+        Log.d(TAG, "App starting. Setting fragment to currentWeatherFragment");
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_frame, viewWeatherFragment)
+                .replace(R.id.fragment_frame, currentWeatherFragment)
                 .commit();
     }
 
@@ -207,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
                     .addOnFailureListener(this, new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d("ViewWeatherFragment", "Failed to get location");
+                            Log.d("CurrentWeatherFragment", "Failed to get location");
                         }
                     });
         }
