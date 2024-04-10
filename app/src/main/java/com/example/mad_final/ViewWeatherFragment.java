@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,10 @@ import java.util.Locale;
 public class ViewWeatherFragment extends Fragment {
 
     private TextView userLatitude;
+
+    private Button toMoreDetails;
+
+    private Button refreshPage;
 
     private TextView userLongitude;
 
@@ -74,6 +79,7 @@ public class ViewWeatherFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
 
     @Override
@@ -87,6 +93,21 @@ public class ViewWeatherFragment extends Fragment {
         userLatitude = rootView.findViewById(R.id.lat_loc);
         userLongitude = rootView.findViewById(R.id.lon_loc);
         userLocTV = rootView.findViewById(R.id.current_location);
+        refreshPage = rootView.findViewById(R.id.refresh_info);
+        toMoreDetails = rootView.findViewById(R.id.more_details);
+
+
+        refreshPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(PermissionChecker.checkPermissions(requireActivity())) {
+                    getLocation();
+                    Toast.makeText(getContext(), "Page updated", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Error in fetching new info", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         //Permission granted
         if(PermissionChecker.checkPermissions(requireActivity()))
@@ -175,7 +196,7 @@ public class ViewWeatherFragment extends Fragment {
                             }
                         });
 
-                    }
+                     }
 
                 }
 

@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".ViewWeatherFragment">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/lat_loc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        style="@style/LocationTS"
         android:text="Lat: --"
-        android:textSize="24sp"
-        android:textColor="#000"
-        android:gravity="center_horizontal" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"/>
 
     <TextView
         android:id="@+id/lon_loc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lat_loc"
-        android:layout_marginTop="16dp"
+        style="@style/LocationTS"
         android:text="Lon: --"
-        android:textSize="24sp"
-        android:textColor="#000"
-        android:gravity="center_horizontal" />
+        android:layout_below="@id/lat_loc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
 
     <TextView
         android:id="@+id/current_temp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lon_loc"
-        android:layout_marginTop="61dp"
-        android:gravity="center_horizontal"
+        style="@style/WeatherTS"
         android:text="Temperature: --"
-        android:textColor="#000"
-        android:textSize="24sp" />
+        android:layout_below="@id/lon_loc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
 
     <TextView
         android:id="@+id/current_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lon_loc"
-        android:layout_marginTop="22dp"
-        android:gravity="center_horizontal"
+        style="@style/WeatherTS"
         android:text="City: --"
-        android:textColor="#000"
-        android:textSize="24sp" />
+        android:layout_below="@id/current_temp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
 
+    <Button
+        android:id="@+id/refresh_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refresh"
+        android:layout_below="@id/current_location"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:textColor="#000000"/>
+
+    <Button
+        android:id="@+id/more_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="More Details"
+        android:layout_below="@id/refresh_info"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:textColor="#000000"/>
 
 </RelativeLayout>
+
