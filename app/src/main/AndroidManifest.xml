@@ -30,6 +30,7 @@
             </intent-filter>
 
         </activity>
+        <receiver android:name=".WeatherAlert" />
 
     </application>
 

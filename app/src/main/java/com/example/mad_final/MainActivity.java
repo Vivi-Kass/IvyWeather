@@ -15,12 +15,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -67,6 +73,26 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.weekly_weather && PermissionChecker.checkPermissions(this)) {
             startWeeklyWeatherFragment();
             return true;
+        }
+        else if (id == R.id.show_notifications){
+
+            boolean isChecked = !item.isChecked();
+            item.setChecked(isChecked);
+
+            PreferenceManager.getDefaultSharedPreferences(this)
+                    .edit()
+                    .putBoolean("show_notifications", isChecked)
+                    .apply();
+
+
+            if (isChecked) {
+                // schedule alarm for every 1 hour compare the last known temperature with newest one,
+                // depending on results show notification
+            } else {
+                // if its ticked off, end service
+            }
+            return true;
+
         }
         else
         {
@@ -214,5 +240,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
 }
