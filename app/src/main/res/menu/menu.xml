@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_modify"
-        android:title="Item 1"
+        android:id="@+id/current_weather"
+        android:title="@string/current_weather"
         />
 
     <item
-        android:id="@+id/nav_home"
-        android:title="Item 2"
+        android:id="@+id/hourly_weather"
+        android:title="@string/hourly_weather"
         />
 
     <item
-        android:id="@+id/nav_file"
-        android:title="Item 3"
+        android:id="@+id/weekly_weather"
+        android:title="@string/weekly_weather"
         />
 </menu>

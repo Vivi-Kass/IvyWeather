@@ -49,12 +49,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
         int id = item.getItemId();
-        if (id == R.id.nav_modify) {
+        if (id == R.id.current_weather && PermissionChecker.checkPermissions(this)) {
+            startCurrentWeatherFragment();
             return true;
-        } else if (id == R.id.nav_home) {
+        } else if (id == R.id.hourly_weather && PermissionChecker.checkPermissions(this)) {
+            startHourlyWeatherFragment();
             return true;
-        } else if (id == R.id.nav_file) {
+        } else if (id == R.id.weekly_weather && PermissionChecker.checkPermissions(this)) {
+            startWeeklyWeatherFragment();
             return true;
+        }
+        else
+        {
+            //otherwise can't change screen
+            Toast.makeText(MainActivity.this, "Location Not Allowed", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -74,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(PermissionChecker.checkPermissions(this))
         {
-            startFragment();
+            startCurrentWeatherFragment();
         }
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(PermissionChecker.checkPermissions(MainActivity.this))
                 {
-                    startFragment();
+                    startCurrentWeatherFragment();
                 }
                 else
                 {
@@ -95,7 +103,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void startFragment()
+    private void startCurrentWeatherFragment()
+    {
+        textView.setVisibility(View.GONE);
+        button.setVisibility(View.GONE);
+        framelayout.setVisibility(View.VISIBLE);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ViewWeatherFragment viewWeatherFragment = new ViewWeatherFragment();
+        Log.d(TAG, "App starting. Setting fragment to viewWeatherFragment");
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_frame, viewWeatherFragment)
+                .commit();
+    }
+
+    private void startHourlyWeatherFragment()
+    {
+        textView.setVisibility(View.GONE);
+        button.setVisibility(View.GONE);
+        framelayout.setVisibility(View.VISIBLE);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        ViewWeatherFragment viewWeatherFragment = new ViewWeatherFragment();
+        Log.d(TAG, "App starting. Setting fragment to viewWeatherFragment");
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_frame, viewWeatherFragment)
+                .commit();
+    }
+
+    private void startWeeklyWeatherFragment()
     {
         textView.setVisibility(View.GONE);
         button.setVisibility(View.GONE);

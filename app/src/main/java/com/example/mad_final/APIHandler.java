@@ -30,8 +30,9 @@ public class APIHandler {
     private WeatherDataListener listener;
     private String apiStart = "https://api.open-meteo.com/v1/forecast?";
 
-    //latitude=52.52&longitude=13.41 (Middle example)
-    private String apiEnd = "&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation";
+    //latitude=52.52&longitude=13.41 (API Middle example)
+    //API end is what to grab
+    private String apiEnd = "&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation,snow_depth,cloud_cover&daily=temperature_2m_max,temperature_2m_min&timezone=auto";
     private StringBuilder apiFull = new StringBuilder();
 
     private Handler handler;
