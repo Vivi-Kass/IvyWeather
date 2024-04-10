@@ -4,6 +4,7 @@
  * PROGRAMMER :      Vivian Morton, Isaac Ribeiro Leao
  * FIRST VERSION :   2024 - 04 - 02
  * DESCRIPTION :     Contains the logic for the main activity
+ * CREDITS: https://www.vecteezy.com/free-vector/weather-icons Weather Icons Vectors by Vecteezy
  */
 
 package com.example.mad_final;
