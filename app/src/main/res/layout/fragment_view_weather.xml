@@ -15,7 +15,8 @@
             style="@style/LocationTS"
             android:text="Lat: --"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="32dp"/>
+            android:layout_marginTop="32dp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/lon_loc"
@@ -23,7 +24,8 @@
             android:text="Lon: --"
             android:layout_below="@id/lat_loc"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/current_temp"

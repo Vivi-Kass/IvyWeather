@@ -87,6 +87,9 @@ public class ViewWeatherFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(PermissionChecker.checkPermissions(requireActivity())) {
+            getLocation();
+        }
 
     }
 
