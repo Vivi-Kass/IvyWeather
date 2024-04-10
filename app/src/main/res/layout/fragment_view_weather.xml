@@ -79,19 +79,31 @@
             android:textColor="#000000"/>
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_below="@id/feels_temp"
             android:layout_marginTop="32dp"
             android:layout_centerHorizontal="true"
             android:id="@+id/weather_icon"
             />
 
+        <TextView
+            android:id="@+id/weather_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/weather_icon"
+            android:layout_centerHorizontal="true"
+            android:text="Status"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#0D47A1"
+            android:layout_marginTop="16dp"
+            android:textSize="24sp"/>
+
         <Button
             android:id="@+id/more_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/weather_icon"
+            android:layout_below="@id/weather_code"
             android:layout_marginTop="32dp"
             android:background="#BBDEFB"
             android:text="More Details"

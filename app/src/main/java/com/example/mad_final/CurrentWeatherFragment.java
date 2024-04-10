@@ -52,6 +52,7 @@ public class CurrentWeatherFragment extends Fragment {
     private TextView userLocTV;
     private TextView currTemperature;
     private TextView feelsTemp;
+    private TextView weatherCode;
     private Handler handler = new Handler();
 
     Location userLocation;
@@ -87,6 +88,7 @@ public class CurrentWeatherFragment extends Fragment {
         swipeRefresh = rootView.findViewById(R.id.swipe_refresh_layout);
         currTemperature = rootView.findViewById(R.id.current_temp);
         feelsTemp = rootView.findViewById(R.id.feels_temp);
+        weatherCode = rootView.findViewById(R.id.weather_code);
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -154,6 +156,8 @@ public class CurrentWeatherFragment extends Fragment {
             userLocTV.setText("City: " + VIWeather.getCity());
             userLatitude.setText("Latitude: " + VIWeather.getUserLocation().getLatitude());
             userLongitude.setText("Longitude: " + VIWeather.getUserLocation().getLongitude());
+            int code = VIWeather.getWeatherData().getJSONObject("current").getInt("weather_code");
+            weatherCode.setText(WeatherCodeHandler.weatherStatus(code));
 
         } catch (JSONException e) {
             e.printStackTrace();
