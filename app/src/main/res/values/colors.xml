@@ -6,6 +6,8 @@
     <color name="background_color">#E3F2FD</color>
     <color name="text_color">#0D47A1</color>
     <color name="button_color">#BBDEFB</color>
-    <color name="orage">#</color>
+    <color name="developerColor">#CCCCCC</color>
+
+    <!--    <color name="orage">#</color>-->
 
 </resources>

@@ -13,6 +13,7 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -171,57 +172,48 @@ public class CurrentWeatherFragment extends Fragment {
     }
 
 
-    private void updateWeather()
-    {
-        try {
-            FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(requireActivity(), new OnSuccessListener<Location>() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onSuccess(Location location) {
-                            //String longitude = Double.toString(location.getLongitude());
-                            //String latitude = Double.toString(location.getLatitude());
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                IvyWeather.setUserLocation(location);
-                                Log.d(TAG, "Location acquired");
-                                APIHandler apiHandler = new APIHandler(handler, getContext(), IvyWeather.getUserLocation(), new APIHandler.WeatherDataListener() {
-                                    @Override
-                                    public void onDataFetched(JSONObject jsonData) {
-                                        //Once Json data is fetched, update UI
-                                        IvyWeather.setWeatherData(jsonData);
-
-                                        IvyWeather.setCity(IvyWeather.getUserLocation(), requireContext());
-                                        //send parameters to fragment
-                                        handler.post(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                updateUI();
-                                                Log.d(TAG, "UI Updated");
-                                            }
-                                        });
-                                    }
-                                });
-
-                            }
-
-                        }
-
-                    })
-                    .addOnFailureListener(requireActivity(), new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("CurrentWeatherFragment", "Failed to get location");
-                        }
-                    });
+    private void updateWeather() {
+        if (!PermissionChecker.checkPermissions(getContext())) {
+            PermissionChecker.promptPrecise(getActivity());
+            return;
         }
-        catch (SecurityException e)
-        {
-            Log.d(TAG, "Security Exception: " + e.getMessage());
-        }
+        IvyWeather ivyWeather = (IvyWeather) getActivity().getApplication();
+        ivyWeather.updateWeather(new IvyWeather.WeatherUpdateListener() {
+            @Override
+            public void onWeatherUpdateComplete() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateUI();
+                        Toast.makeText(getContext(), "Weather updated successfully", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
+            @Override
+            public void onWeatherUpdateFailed(Exception e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), "Failed to update weather: ", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        }, getContext());
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 0) { // Check if the request code corresponds to the request we made
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                updateWeather();
+            } else {
+                Toast.makeText(getContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }
 
 

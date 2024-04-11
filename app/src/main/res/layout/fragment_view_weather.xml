@@ -111,6 +111,17 @@
             android:textAllCaps="false"
             android:textSize="18sp"/>
 
+        <TextView
+            android:id="@+id/footer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:text="\u00402024 Vivian Morton and Isaac Leao"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/text_color" />
+
     </RelativeLayout>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -80,6 +80,33 @@ public class WeatherCodeHandler {
         return weatherCodes.get(code);
     }
 
+
+    public static int getIconInt(int weatherCode, int dayStatus, Context ctx) {
+        // Default icon in case no conditions match
+        int iconResId = R.drawable.ic_launcher_foreground; // Default icon, replace with an actual default icon
+
+        // Determine the icon based on weather code
+        if (sun.contains(weatherCode) && dayStatus == isday) {
+            iconResId = R.drawable.sun;
+        } else if (sunCloud.contains(weatherCode) && dayStatus == isday) {
+            iconResId = R.drawable.sun_cloud;
+        } else if (moon.contains(weatherCode) && dayStatus != isday) {
+            iconResId = R.drawable.moon;
+        } else if (moonCloud.contains(weatherCode) && dayStatus != isday) {
+            iconResId = R.drawable.moon_cloud;
+        } else if (cloud.contains(weatherCode)) {
+            iconResId = R.drawable.clouds;
+        } else if (rain.contains(weatherCode)) {
+            iconResId = R.drawable.rain;
+        } else if (snow.contains(weatherCode)) {
+            iconResId = R.drawable.snow;
+        } else if (thunder.contains(weatherCode)) {
+            iconResId = R.drawable.thunder;
+        }
+
+        return iconResId;
+    }
+
     public static Drawable getIcon(int weatherCode, int dayStatus, Context ctx)
     {
         Drawable icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_foreground); //this is a way to ensure we catch issues
