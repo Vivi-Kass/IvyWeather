@@ -155,10 +155,10 @@ public class MainActivity extends AppCompatActivity {
         framelayout.setVisibility(View.VISIBLE);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        CurrentWeatherFragment currentWeatherFragment = new CurrentWeatherFragment();
+        HourlyWeatherFragment hourlyWeatherFragment = new HourlyWeatherFragment();
         Log.d(TAG, "App starting. Setting fragment to currentWeatherFragment");
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_frame, currentWeatherFragment)
+                .replace(R.id.fragment_frame, hourlyWeatherFragment)
                 .commit();
     }
 
