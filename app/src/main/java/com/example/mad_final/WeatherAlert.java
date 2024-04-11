@@ -11,7 +11,7 @@ public class WeatherAlert extends BroadcastReceiver {
         if (PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean("show_notifications", false)) {
 
-            Intent serviceIntent = new Intent(context, VIWeather.class);
+            Intent serviceIntent = new Intent(context, IvyWeather.class);
             context.startService(serviceIntent);
         }
     }

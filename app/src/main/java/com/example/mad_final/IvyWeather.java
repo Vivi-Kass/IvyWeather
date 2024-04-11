@@ -1,5 +1,5 @@
 /*
- * FILE :            VIWeather.java
+ * FILE :            IvyWeather.java
  * PROJECT :         PROG3150 - Project
  * PROGRAMMER :      Vivian Morton, Isaac Ribeiro Leao
  * FIRST VERSION :   2024 - 04 - 10
@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class VIWeather extends Application {
+public class IvyWeather extends Application {
 
-    private static VIWeather singleton;
+    private static IvyWeather singleton;
 
     private static String city;
     private static Location userLocation;
@@ -42,7 +42,7 @@ public class VIWeather extends Application {
     }
 
     public static void setUserLocation(Location userLocation) {
-        VIWeather.userLocation = userLocation;
+        IvyWeather.userLocation = userLocation;
     }
 
     public static JSONObject getWeatherData() {
@@ -50,10 +50,10 @@ public class VIWeather extends Application {
     }
 
     public static void setWeatherData(JSONObject weatherData) {
-        VIWeather.weatherData = weatherData;
+        IvyWeather.weatherData = weatherData;
     }
 
-    public VIWeather getInstance(){
+    public IvyWeather getInstance(){
         return singleton;
     }
 

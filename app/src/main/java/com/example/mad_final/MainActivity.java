@@ -16,17 +16,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -43,10 +35,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -202,15 +190,15 @@ public class MainActivity extends AppCompatActivity {
                             //String latitude = Double.toString(location.getLatitude());
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
-                                VIWeather.setUserLocation(location);
+                                IvyWeather.setUserLocation(location);
                                 Log.d(TAG, "Location acquired");
-                                APIHandler apiHandler = new APIHandler(handler, getBaseContext(), VIWeather.getUserLocation(), new APIHandler.WeatherDataListener() {
+                                APIHandler apiHandler = new APIHandler(handler, getBaseContext(), IvyWeather.getUserLocation(), new APIHandler.WeatherDataListener() {
                                     @Override
                                     public void onDataFetched(JSONObject jsonData) {
                                         //Once Json data is fetched, update UI
-                                        VIWeather.setWeatherData(jsonData);
+                                        IvyWeather.setWeatherData(jsonData);
 
-                                        VIWeather.setCity(VIWeather.getUserLocation(), getBaseContext());
+                                        IvyWeather.setCity(IvyWeather.getUserLocation(), getBaseContext());
 
 
 

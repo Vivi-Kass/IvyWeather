@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VI Weather</string>
+    <string name="app_name">Ivy Weather</string>
     <string name="need_location">This app needs the location to be allowed in order to work.\n Please enable it in settings.</string>
     <string name="refresh_text">Reload</string>
     <string name="show_details">More Details</string>

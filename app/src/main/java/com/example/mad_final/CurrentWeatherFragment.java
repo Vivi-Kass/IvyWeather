@@ -13,7 +13,6 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -36,10 +35,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URI;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -126,7 +123,7 @@ public class CurrentWeatherFragment extends Fragment {
                 AlertDialog.Builder latlonnotification = new AlertDialog.Builder(requireActivity());
                 latlonnotification.setTitle("Location Details");
 
-                latlonnotification.setMessage("Latitude: " + VIWeather.getUserLocation().getLatitude() + "\nLongitude: " + VIWeather.getUserLocation().getLongitude());
+                latlonnotification.setMessage("Latitude: " + IvyWeather.getUserLocation().getLatitude() + "\nLongitude: " + IvyWeather.getUserLocation().getLongitude());
 
                 latlonnotification.setPositiveButton("Close", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -154,16 +151,16 @@ public class CurrentWeatherFragment extends Fragment {
 
             int hour = currentTime.getHours();
 
-            double temperature = VIWeather.getWeatherData().getJSONObject("current").getDouble("temperature_2m"); // Adjust based on actual structure
-            double feelsLike = VIWeather.getWeatherData().getJSONObject("current").getDouble("apparent_temperature"); // Adjust based on actual structure
+            double temperature = IvyWeather.getWeatherData().getJSONObject("current").getDouble("temperature_2m"); // Adjust based on actual structure
+            double feelsLike = IvyWeather.getWeatherData().getJSONObject("current").getDouble("apparent_temperature"); // Adjust based on actual structure
             currTemperature.setText(String.format(Locale.getDefault(), " %.1f°C", temperature));
             feelsTemp.setText(String.format(Locale.getDefault(), "Feels Like: %.1f°C",  feelsLike));
-            userLocTV.setText("City: " + VIWeather.getCity());
-            userLatitude.setText("Latitude: " + VIWeather.getUserLocation().getLatitude());
-            userLongitude.setText("Longitude: " + VIWeather.getUserLocation().getLongitude());
-            int code = VIWeather.getWeatherData().getJSONObject("current").getInt("weather_code");
+            userLocTV.setText("City: " + IvyWeather.getCity());
+            userLatitude.setText("Latitude: " + IvyWeather.getUserLocation().getLatitude());
+            userLongitude.setText("Longitude: " + IvyWeather.getUserLocation().getLongitude());
+            int code = IvyWeather.getWeatherData().getJSONObject("current").getInt("weather_code");
             weatherCode.setText(WeatherCodeHandler.weatherStatus(code));
-            int isDay = VIWeather.getWeatherData().getJSONObject("current").getInt("is_day");
+            int isDay = IvyWeather.getWeatherData().getJSONObject("current").getInt("is_day");
 
             weatherIcon.setImageDrawable(WeatherCodeHandler.getIcon(code, isDay, requireContext()));
 
@@ -187,15 +184,15 @@ public class CurrentWeatherFragment extends Fragment {
                             //String latitude = Double.toString(location.getLatitude());
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
-                                VIWeather.setUserLocation(location);
+                                IvyWeather.setUserLocation(location);
                                 Log.d(TAG, "Location acquired");
-                                APIHandler apiHandler = new APIHandler(handler, getContext(), VIWeather.getUserLocation(), new APIHandler.WeatherDataListener() {
+                                APIHandler apiHandler = new APIHandler(handler, getContext(), IvyWeather.getUserLocation(), new APIHandler.WeatherDataListener() {
                                     @Override
                                     public void onDataFetched(JSONObject jsonData) {
                                         //Once Json data is fetched, update UI
-                                        VIWeather.setWeatherData(jsonData);
+                                        IvyWeather.setWeatherData(jsonData);
 
-                                        VIWeather.setCity(VIWeather.getUserLocation(), requireContext());
+                                        IvyWeather.setCity(IvyWeather.getUserLocation(), requireContext());
                                         //send parameters to fragment
                                         handler.post(new Runnable() {
                                             @Override
