@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HourlyWeatherListView">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:text="Time"
+        android:id="@+id/hourly_time"
+        android:textColor="@color/text_color"
+        android:textStyle="bold"
+        />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/weather_icon_hourly"
+        android:layout_alignStart="@id/hourly_time"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/clouds"
+
+        />
+
+    <TextView
+        android:id="@+id/hourly_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/weather_icon_hourly"
+        android:layout_alignStart="@+id/weather_icon_hourly"
+        android:layout_alignEnd="@id/weather_icon_hourly"
+        android:layout_marginStart="-20dp"
+        android:layout_marginEnd="-20dp"
+        android:text="Freezing Rain"
+        android:textAlignment="center"
+        android:textColor="@color/text_color" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/hourly_code"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="25dp"
+        android:text="Temp:"
+        android:id="@+id/hourly_temp_view"
+        android:textColor="@color/text_color"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/hourly_temp_view"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/hourly_temp_view"
+        android:text="Feels:"
+        android:id="@+id/hourly_feel_view"
+        android:textColor="@color/text_color"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/hourly_feel_view"
+        android:layout_marginStart="65dp"
+        android:layout_marginTop="25dp"
+        android:text="P.O.P: 100%"
+        android:id="@+id/hourly_precipitation_prob"
+        android:textColor="@color/text_color"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/hourly_precipitation_prob"
+        android:layout_below="@+id/hourly_precipitation_prob"
+        android:layout_marginTop="10dp"
+        android:text="1mm"
+        android:id="@+id/hourly_precipitation_amount"
+        android:textColor="@color/text_color"
+        android:layout_alignEnd="@id/hourly_precipitation_prob"
+        android:textAlignment="center"
+        />
+
+
+
+</RelativeLayout>
