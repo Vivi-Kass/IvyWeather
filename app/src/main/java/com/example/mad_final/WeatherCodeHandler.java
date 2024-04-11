@@ -8,6 +8,9 @@
 
 package com.example.mad_final;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,30 +80,30 @@ public class WeatherCodeHandler {
         return weatherCodes.get(code);
     }
 
-    public static String getIcon(int weatherCode, int dayStatus)
+    public static Drawable getIcon(int weatherCode, int dayStatus, Context ctx)
     {
-        String iconName = "";
+        Drawable icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_foreground); //this is a way to ensure we catch issues
         if (weatherCode >= 3) //no moon or sun
         {
             if (cloud.contains(weatherCode))
             {
-                iconName = "Cloud";
+                icon = ctx.getResources().getDrawable(R.drawable.clouds);
             }
             else if (rain.contains(weatherCode))
             {
-                iconName = "Rain";
+                icon = ctx.getResources().getDrawable(R.drawable.rain);
             }
             else if (freezingRain.contains(weatherCode))
             {
-                iconName = "FreezingRain";
+                icon = ctx.getResources().getDrawable(R.drawable.rain);
             }
             else if (snow.contains(weatherCode))
             {
-                iconName = "Snow";
+                icon = ctx.getResources().getDrawable(R.drawable.snow);
             }
             else if (thunder.contains(weatherCode))
             {
-                iconName = "Thunder";
+                icon = ctx.getResources().getDrawable(R.drawable.thunder);
             }
         }
         else //moon or sun
@@ -109,11 +112,11 @@ public class WeatherCodeHandler {
             {
                 if (sun.contains(weatherCode))
                 {
-                    iconName = "Sun";
+                    icon = ctx.getResources().getDrawable(R.drawable.sun);
                 }
                 else if (sunCloud.contains(weatherCode))
                 {
-                    iconName = "SunCloud";
+                    icon = ctx.getResources().getDrawable(R.drawable.sun_cloud);
                 }
 
             }
@@ -121,16 +124,16 @@ public class WeatherCodeHandler {
             {
                 if (moon.contains(weatherCode))
                 {
-                    iconName = "Moon";
+                    icon = ctx.getResources().getDrawable(R.drawable.moon);
                 }
                 else if (moonCloud.contains(weatherCode))
                 {
-                    iconName = "MoonCloud";
+                    icon = ctx.getResources().getDrawable(R.drawable.moon_cloud);
                 }
             }
         }
 
-        return iconName;
+        return icon;
     }
 
 

@@ -19,4 +19,8 @@
         android:title="@string/show_notifications"
         android:checkable="true"
         />
+    <item
+        android:id="@+id/credits"
+        android:title="@string/credits"
+        />
 </menu>

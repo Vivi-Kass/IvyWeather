@@ -13,6 +13,7 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -26,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URI;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -53,6 +56,7 @@ public class CurrentWeatherFragment extends Fragment {
     private TextView currTemperature;
     private TextView feelsTemp;
     private TextView weatherCode;
+    private ImageView weatherIcon;
     private Handler handler = new Handler();
 
     Location userLocation;
@@ -89,6 +93,7 @@ public class CurrentWeatherFragment extends Fragment {
         currTemperature = rootView.findViewById(R.id.current_temp);
         feelsTemp = rootView.findViewById(R.id.feels_temp);
         weatherCode = rootView.findViewById(R.id.weather_code);
+        weatherIcon = rootView.findViewById(R.id.weather_icon);
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -158,8 +163,12 @@ public class CurrentWeatherFragment extends Fragment {
             userLongitude.setText("Longitude: " + VIWeather.getUserLocation().getLongitude());
             int code = VIWeather.getWeatherData().getJSONObject("current").getInt("weather_code");
             weatherCode.setText(WeatherCodeHandler.weatherStatus(code));
+            int isDay = VIWeather.getWeatherData().getJSONObject("current").getInt("is_day");
 
-        } catch (JSONException e) {
+            weatherIcon.setImageDrawable(WeatherCodeHandler.getIcon(code, isDay, requireContext()));
+
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

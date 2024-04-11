@@ -10,4 +10,5 @@
     <string name="loading">Loading Please wait…</string>
     <string name="weather_icon_description">Current Weather</string>
     <string name="show_notifications">Show notifications?</string>
+    <string name="credits">Credits</string>
 </resources>
