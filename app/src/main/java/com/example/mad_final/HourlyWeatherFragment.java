@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,7 +33,8 @@ import java.util.Locale;
 public class HourlyWeatherFragment extends Fragment {
 
     private SwipeRefreshLayout refreshPage;
-    Handler handler = new Handler();
+    private TextView location;
+    private Handler handler = new Handler();
 
     public HourlyWeatherFragment() {
         // Required empty public constructor
@@ -53,6 +55,9 @@ public class HourlyWeatherFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_hourly_weather, container, false);
 
         refreshPage = view.findViewById(R.id.swipe_refresh_layout_hourly);
+        location = view.findViewById(R.id.hourly_location_text);
+
+        location.setText("City: "+ IvyWeather.getCity());
 
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
