@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="150mm"
+   height="150mm"
+   viewBox="0 0 150 150"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="VI Weather Icon.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   inkscape:export-filename="VI Weather Icon V1.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.087256"
+     inkscape:cx="122.3263"
+     inkscape:cy="366.05914"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <rect
+     style="display:inline;fill:#51bcd8;fill-opacity:1;stroke:none;stroke-width:1.53201"
+     id="rect2852"
+     width="150"
+     height="150"
+     x="0"
+     y="0"
+     ry="0" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:none">
+    <g
+       id="g1122"
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none"
+       transform="translate(7.8710728,37.87774)">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1"
+         id="rect1070"
+         width="81.219002"
+         height="34.242756"
+         x="26.519426"
+         y="28.264317"
+         ry="17.121378" />
+      <ellipse
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.19804"
+         id="path1074"
+         cx="54.360447"
+         cy="28.264317"
+         rx="18.39846"
+         ry="16.526869" />
+      <ellipse
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.02745"
+         id="path1074-5"
+         cx="81.848328"
+         cy="33.9552"
+         rx="14.205676"
+         ry="15.743161" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:28.7081px;font-family:'Linux Libertine Display G';-inkscape-font-specification:'Linux Libertine Display G, Normal';display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.651016"
+       x="59.297447"
+       y="91.011627"
+       id="text1178"><tspan
+         sodipodi:role="line"
+         id="tspan1176"
+         style="fill:#000000;fill-opacity:1;stroke-width:0.651016"
+         x="59.297447"
+         y="91.011627">VI</tspan></text>
+  </g>
+</svg>
