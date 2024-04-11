@@ -16,6 +16,7 @@
         android:id="@+id/hourly_time"
         android:textColor="@color/text_color"
         android:textStyle="bold"
+        android:layout_marginBottom="30dp"
         />
 
     <ImageView
@@ -83,6 +84,7 @@
         android:layout_alignStart="@+id/hourly_precipitation_prob"
         android:layout_below="@+id/hourly_precipitation_prob"
         android:layout_marginTop="10dp"
+
         android:text="1mm"
         android:id="@+id/hourly_precipitation_amount"
         android:textColor="@color/text_color"
