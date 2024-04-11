@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.weekly_weather && PermissionChecker.checkPermissions(this)) {
             startWeeklyWeatherFragment();
             return true;
+        } else if (id == R.id.credits) {
+            startCreditsFragment();
+            return true;
         }
         else if (id == R.id.show_notifications){
 
@@ -163,6 +166,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startWeeklyWeatherFragment()
+    {
+        textView.setVisibility(View.GONE);
+        button.setVisibility(View.GONE);
+        framelayout.setVisibility(View.VISIBLE);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        CurrentWeatherFragment currentWeatherFragment = new CurrentWeatherFragment();
+        Log.d(TAG, "App starting. Setting fragment to currentWeatherFragment");
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_frame, currentWeatherFragment)
+                .commit();
+    }
+
+    private void startCreditsFragment()
     {
         textView.setVisibility(View.GONE);
         button.setVisibility(View.GONE);
