@@ -222,8 +222,6 @@ public class CurrentWeatherFragment extends Fragment {
         }
 
     }
-
-
 }
 
 
