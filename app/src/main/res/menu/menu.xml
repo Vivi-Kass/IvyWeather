@@ -11,8 +11,8 @@
         />
 
     <item
-        android:id="@+id/weekly_weather"
-        android:title="@string/weekly_weather"
+        android:id="@+id/daily_weather"
+        android:title="@string/daily_weather"
         />
     <item
         android:id="@+id/show_notifications"

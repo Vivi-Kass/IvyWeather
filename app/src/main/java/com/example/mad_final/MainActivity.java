@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.hourly_weather && PermissionChecker.checkPermissions(this)) {
             startHourlyWeatherFragment();
             return true;
-        } else if (id == R.id.weekly_weather && PermissionChecker.checkPermissions(this)) {
-            startWeeklyWeatherFragment();
+        } else if (id == R.id.daily_weather && PermissionChecker.checkPermissions(this)) {
+            startDailyWeatherFragment();
             return true;
         } else if (id == R.id.credits) {
             startCreditsFragment();
@@ -165,17 +165,17 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void startWeeklyWeatherFragment()
+    private void startDailyWeatherFragment()
     {
         textView.setVisibility(View.GONE);
         button.setVisibility(View.GONE);
         framelayout.setVisibility(View.VISIBLE);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        CurrentWeatherFragment currentWeatherFragment = new CurrentWeatherFragment();
+        DailyWeatherFragment dailyWeatherFragment = new DailyWeatherFragment();
         Log.d(TAG, "App starting. Setting fragment to currentWeatherFragment");
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_frame, currentWeatherFragment)
+                .replace(R.id.fragment_frame, dailyWeatherFragment)
                 .commit();
     }
 
@@ -186,10 +186,10 @@ public class MainActivity extends AppCompatActivity {
         framelayout.setVisibility(View.VISIBLE);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        CurrentWeatherFragment currentWeatherFragment = new CurrentWeatherFragment();
+        CreditsFragment creditsFragment = new CreditsFragment();
         Log.d(TAG, "App starting. Setting fragment to currentWeatherFragment");
         fragmentManager.beginTransaction()
-                .replace(R.id.fragment_frame, currentWeatherFragment)
+                .replace(R.id.fragment_frame, creditsFragment)
                 .commit();
     }
 

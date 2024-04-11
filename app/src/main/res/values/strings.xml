@@ -6,7 +6,7 @@
     <string name="show_details_description">Latitude and Longitude</string>
     <string name="current_weather">Current Weather</string>
     <string name="hourly_weather">Hourly Weather</string>
-    <string name="weekly_weather">Weather this Week</string>
+    <string name="daily_weather">Daily Weather</string>
     <string name="loading">Loading Please wait…</string>
     <string name="weather_icon_description">Current Weather</string>
     <string name="show_notifications">Show notifications?</string>
