@@ -16,6 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -80,10 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
 
             if (isChecked) {
-                // schedule alarm for every 1 hour compare the last known temperature with newest one,
-                // depending on results show notification
+                scheduleWeatherUpdates();
             } else {
-                // if its ticked off, end service
+                cancelWeatherUpdates();
             }
             return true;
 
@@ -136,6 +139,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void scheduleWeatherUpdates() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, WeatherAlert.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
+        // Schedule the alarm to trigger every hour
+        long interval = 3600000; // 1 hour in milliseconds
+        long startTime = System.currentTimeMillis() + interval;
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startTime, interval, pendingIntent);
+        Toast.makeText(this, "Notifications scheduled", Toast.LENGTH_SHORT).show();
+    }
+
+    private void cancelWeatherUpdates() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, WeatherAlert.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+        alarmManager.cancel(pendingIntent);
+        Toast.makeText(this, "Notifications canceled", Toast.LENGTH_SHORT).show();
+    }
 
     private void startCurrentWeatherFragment()
     {

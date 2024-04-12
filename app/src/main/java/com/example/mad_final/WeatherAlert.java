@@ -8,11 +8,14 @@ import android.preference.PreferenceManager;
 public class WeatherAlert extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean("show_notifications", false)) {
-
-            Intent serviceIntent = new Intent(context, IvyWeather.class);
+        boolean notificationsEnabled = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean("show_notifications", false);
+        Intent serviceIntent = new Intent(context, IvyWeather.class);
+        if (notificationsEnabled) {
             context.startService(serviceIntent);
+        } else {
+            context.stopService(serviceIntent);
         }
     }
+
 }
