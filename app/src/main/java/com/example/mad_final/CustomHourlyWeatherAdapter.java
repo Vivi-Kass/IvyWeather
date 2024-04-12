@@ -78,8 +78,13 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
 
         try{
             dayTimeString = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("time").getString(realPosition).split("T");
-            date.setText(dayTimeString[dateloc]);
+
             time.setText(dayTimeString[timeloc]);
+            //remove first 5 chars
+            String dateShort = dayTimeString[dateloc].substring(5, dayTimeString[dateloc].length());
+            date.setText(dateShort);
+
+
             double temperature = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("temperature_2m").getDouble(position);
             double feelsLike = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("apparent_temperature").getDouble(position);
             int weatherCode = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("weather_code").getInt(position);
@@ -99,11 +104,15 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
 
 
             temperatureText.setText(String.format(Locale.getDefault(), " %.1f°C", temperature));
-            feels.setText("Feels: " + String.format(Locale.getDefault(), "%.1f°C",  feelsLike));
+
+            StringBuilder tempFeels = new StringBuilder();
+            tempFeels.append("(");
+            tempFeels.append(String.format(Locale.getDefault(), "%.1f°C",  feelsLike));
+            tempFeels.append(")");
+            feels.setText(tempFeels);
 
             precipitationProb.setText("P.O.P: " + Integer.toString(precipitationProba) + "%");
             precipitationAmount.setText(String.format(Locale.getDefault(), "%.2fmm",  precipitation));
-
         }
         catch (Exception e)
         {
