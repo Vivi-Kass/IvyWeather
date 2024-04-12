@@ -155,9 +155,6 @@
         android:text="Vivian\nMorton"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textAlignment="center"
-        android:linksClickable="true"
-        android:autoLink="web"
-        android:clickable="true"
         />
 
     <ImageView
@@ -220,12 +217,6 @@
         android:visibility="gone"
         />
 
-
-    <WebView
-        android:id="@+id/webviewGitHub"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
 
 
 

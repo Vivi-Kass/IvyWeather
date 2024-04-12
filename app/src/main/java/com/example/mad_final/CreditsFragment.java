@@ -1,18 +1,25 @@
 package com.example.mad_final;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 public class CreditsFragment extends Fragment {
-    private WebView myWebView;
+
+    private TextView tvIsaacTitle;
+
+    private TextView tvVivianTitle;
 
     public CreditsFragment() {
         // Required empty public constructor
@@ -33,28 +40,40 @@ public class CreditsFragment extends Fragment {
 
 
         View rootView = inflater.inflate(R.layout.fragment_credits, container, false);
-        myWebView = (WebView) rootView.findViewById(R.id.webviewGitHub);
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_credits, container, false);
-    }
-
-    public void openGitHub(@NonNull View view) {
-
-        myWebView.setWebViewClient(new WebViewClient());
-        myWebView.loadUrl("https://github.com/IribeiroLeao2003");
-        myWebView.setVisibility(view.VISIBLE);
-
-    }
-
-    public void openGitHubVivian(View view) {
-        myWebView.setWebViewClient(new WebViewClient() {
+        tvIsaacTitle = rootView.findViewById(R.id.tvIsaacTitle);
+        tvVivianTitle = rootView.findViewById(R.id.tvVivianTitle);
+//        tvVivianTitle.setMovementMethod(LinkMovementMethod.getInstance());
+        tvIsaacTitle.setOnClickListener(new View.OnClickListener() {
+            final String link = "https://github.com/IribeiroLeao2003";
             @Override
-            public void onPageFinished(WebView view, String url) {
-                view.setVisibility(View.VISIBLE);
+            public void onClick(View v) {
+                openGitHub(v,link);
             }
         });
-        myWebView.loadUrl("https://github.com/vivi-kiwi");
-        myWebView.setVisibility(View.VISIBLE);
+
+        tvVivianTitle.setOnClickListener(new  View.OnClickListener(){
+
+            final String link = "https://github.com/vivi-kiwi";
+            @Override
+            public void onClick(View v) {
+                openGitHub(v,link);
+            }
+        });
+
+        // Inflate the layout for this fragment
+        return rootView;
+    }
+
+    public void openGitHub(View view, String link) {
+
+        if (!link.startsWith("http://") && !link.startsWith("https://")) {
+
+            link = "http://" + link;
+        }
+
+        Uri uri = Uri.parse(link);
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(browserIntent);
     }
 }
