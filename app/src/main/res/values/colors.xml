@@ -8,8 +8,8 @@
     <color name="button_color">#BBDEFB</color>
     <color name="developerColor">#CCCCCC</color>
     <color name="border_color">#CCE1F3</color>
-
-
-    <!--    <color name="orage">#</color>-->
+    <color name="link">#0000EE</color>
+    <color name="strong_orange">#E5A020</color>
+    <color name="light_orange">#E8BE71</color>
 
 </resources>

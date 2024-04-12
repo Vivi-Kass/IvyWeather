@@ -18,9 +18,9 @@
 
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/purple</item>
-        <item name="colorPrimaryDark">@color/purple</item>
-        <item name="colorAccent">@color/purple</item>
+        <item name="colorPrimary">@color/light_orange</item>
+        <item name="colorPrimaryDark">@color/strong_orange</item>
+        <item name="colorAccent">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar"> </style>

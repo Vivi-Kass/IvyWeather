@@ -1,6 +1,7 @@
 package com.example.mad_final;
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,19 +14,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CreditsFragment extends Fragment {
+    private final String isaacLink = "https://github.com/IribeiroLeao2003";
+    private final String vivianLink = "https://github.com/vivi-kiwi";
+    private final String iconCreditLink = "https://www.vecteezy.com/free-vector/weather-icons";
+    private final String repoLink = "https://github.com/vivi-kiwi/MAD-Final";
 
-    private TextView tvIsaacTitle;
-
-    private TextView tvVivianTitle;
 
     public CreditsFragment() {
         // Required empty public constructor
     }
 
-    public static CreditsFragment newInstance(String param1, String param2) {
+    public static CreditsFragment newInstance() {
         return new CreditsFragment();
     }
 
@@ -41,23 +44,55 @@ public class CreditsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_credits, container, false);
 
-        tvIsaacTitle = rootView.findViewById(R.id.tvIsaacTitle);
-        tvVivianTitle = rootView.findViewById(R.id.tvVivianTitle);
-//        tvVivianTitle.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView tvIsaacTitle = rootView.findViewById(R.id.tvIsaacTitle);
+        TextView tvVivianTitle = rootView.findViewById(R.id.tvVivianTitle);
+
+        ImageView appLogo = rootView.findViewById(R.id.ivHammock);
+        ImageView vivianIcon = rootView.findViewById(R.id.ivVivian);
+        ImageView isaacIcon = rootView.findViewById(R.id.ivIsaac);
+
+        TextView iconCredit = rootView.findViewById(R.id.icon_credit_text);
+
         tvIsaacTitle.setOnClickListener(new View.OnClickListener() {
-            final String link = "https://github.com/IribeiroLeao2003";
             @Override
             public void onClick(View v) {
-                openGitHub(v,link);
+                openGitHub(v,isaacLink);
+            }
+        });
+
+        isaacIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGitHub(v,isaacLink);
             }
         });
 
         tvVivianTitle.setOnClickListener(new  View.OnClickListener(){
-
-            final String link = "https://github.com/vivi-kiwi";
             @Override
             public void onClick(View v) {
-                openGitHub(v,link);
+                openGitHub(v,vivianLink);
+            }
+        });
+
+        vivianIcon.setOnClickListener(new  View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openGitHub(v,vivianLink);
+            }
+        });
+
+        appLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGitHub(v,repoLink);
+            }
+        });
+
+
+        iconCredit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGitHub(v,iconCreditLink);
             }
         });
 

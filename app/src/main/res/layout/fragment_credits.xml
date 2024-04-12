@@ -100,6 +100,7 @@
         android:linksClickable="true"
         android:autoLink="web"
         android:clickable="true"
+        android:textColor="@color/link"
         />
 
     <ImageView
@@ -155,6 +156,7 @@
         android:text="Vivian\nMorton"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textAlignment="center"
+        android:textColor="@color/link"
         />
 
     <ImageView
@@ -201,6 +203,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="20sp"
         android:textAlignment="center"
+        android:textColor="@color/link"
         />
     <TextView
         android:id="@+id/icon_credit_link"
