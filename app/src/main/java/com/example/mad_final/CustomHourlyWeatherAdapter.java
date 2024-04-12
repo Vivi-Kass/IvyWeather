@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CustomHourlyWeatherAdapter extends BaseAdapter {
     private Context context;
@@ -26,27 +27,32 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
     private int offset;
     private static int hoursCount = 168; // 7 days each with 24 hours
     private LayoutInflater inflater;
-    private List<WeatherData> weatherDataList = new ArrayList<>();
 
-    public CustomHourlyWeatherAdapter(Context ctx, List<WeatherData> data) {
+    private final int dateloc = 0;
+    private final int timeloc = 1;
+
+
+    public CustomHourlyWeatherAdapter(Context ctx) {
         context = ctx;
         inflater = LayoutInflater.from(ctx);
-        weatherDataList = data;
     }
 
     @Override
     public int getCount() {
-        return weatherDataList.size();
+        Date currentTime = Calendar.getInstance().getTime();
+        offset = currentTime.getHours();
+        int total = hoursCount - offset; //subtract the passed time from the total number
+        return total;
     }
 
     @Override
-    public WeatherData getItem(int position) {
-        return weatherDataList.get(position);
+    public Object getItem(int i) {
+        return null;
     }
 
     @Override
-    public long getItemId(int position) {
-        return position;
+    public long getItemId(int i) {
+        return 0;
     }
 
     @SuppressLint("RestrictedApi")
@@ -56,7 +62,6 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.activity_hourly_weather_list_view, parent, false);
         }
 
-        WeatherData weatherData = getItem(position);
 
         int realPosition = position + offset;
         String dayTimeString[] = null;
@@ -65,20 +70,40 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
         TextView time = convertView.findViewById(R.id.hourly_time);
         ImageView icon = convertView.findViewById(R.id.weather_icon_hourly);
         TextView code = convertView.findViewById(R.id.hourly_code);
-        TextView temperture = convertView.findViewById(R.id.hourly_temp_view);
+        TextView temperatureText = convertView.findViewById(R.id.hourly_temp_view);
         TextView feels = convertView.findViewById(R.id.hourly_feel_view);
         TextView precipitationProb = convertView.findViewById(R.id.hourly_precipitation_prob);
         TextView precipitationAmount = convertView.findViewById(R.id.hourly_precipitation_amount);
 
 
         try{
-            date.setText(weatherData.date);
-            time.setText(weatherData.time);
-            temperture.setText(weatherData.temperature + "°C");
-            feels.setText(weatherData.feelsLike + "°C");
-            precipitationProb.setText(weatherData.precipitationProb + "%");
-            precipitationAmount.setText(weatherData.precipitationAmount + " mm");
-            icon.setImageResource(weatherData.weatherIconResId);
+            dayTimeString = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("time").getString(realPosition).split("T");
+            date.setText(dayTimeString[dateloc]);
+            time.setText(dayTimeString[timeloc]);
+            double temperature = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("temperature_2m").getDouble(position);
+            double feelsLike = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("apparent_temperature").getDouble(position);
+            int weatherCode = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("weather_code").getInt(position);
+            int precipitationProba = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("precipitation_probability").getInt(position);
+            double precipitation = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("precipitation").getDouble(position);
+
+            //icon
+            String[] hourString = dayTimeString[timeloc].split(":");
+            int hour = Integer.parseInt(hourString[0]);
+            int isday = 1; //day
+            if (hour >= 18 || hour <= 6)
+            {
+                isday = 0; //night
+            }
+            icon.setImageDrawable(WeatherCodeHandler.getIcon(weatherCode, isday,convertView.getContext()));
+            code.setText(WeatherCodeHandler.weatherStatus(weatherCode));
+
+
+            temperatureText.setText(String.format(Locale.getDefault(), " %.1f°C", temperature));
+            feels.setText("Feels: " + String.format(Locale.getDefault(), "%.1f°C",  feelsLike));
+
+            precipitationProb.setText("P.O.P: " + Integer.toString(precipitationProba) + "%");
+            precipitationAmount.setText(String.format(Locale.getDefault(), "%.2fmm",  precipitation));
+
         }
         catch (Exception e)
         {
@@ -86,35 +111,9 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
         }
 
 
+
         return convertView;
     }
 
-
-    public void updateData(List<WeatherData> data) {
-        weatherDataList = data;
-        notifyDataSetChanged();
-    }
-
-    public static class WeatherData {
-        public String date;
-        public String time;
-        public String temperature;
-        public String feelsLike;
-        public String description;
-        public String precipitationProb;
-        public String precipitationAmount;
-        public int weatherIconResId;
-
-        public WeatherData(String date, String time, String temperature, String feelsLike, String description, String precipitationProb, String precipitationAmount, int weatherIconResId) {
-            this.date = date;
-            this.time = time;
-            this.temperature = temperature;
-            this.feelsLike = feelsLike;
-            this.description = description;
-            this.precipitationProb = precipitationProb;
-            this.precipitationAmount = precipitationAmount;
-            this.weatherIconResId = weatherIconResId;
-        }
-    }
 
 }
