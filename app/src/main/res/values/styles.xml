@@ -16,12 +16,21 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
+    <style name="ThemeOverlay.Actionbar" parent="Theme.AppCompat.Light.DarkActionBar" >
+        <item name="android:textColorPrimary">@color/text_color</item>
+    </style>
+
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/light_orange</item>
         <item name="colorPrimaryDark">@color/strong_orange</item>
         <item name="colorAccent">@color/white</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
     </style>
+
+
+
+
 
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar"> </style>
 </resources>
