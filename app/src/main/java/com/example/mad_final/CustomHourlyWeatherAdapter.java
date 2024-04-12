@@ -85,11 +85,11 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
             date.setText(dateShort);
 
 
-            double temperature = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("temperature_2m").getDouble(position);
-            double feelsLike = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("apparent_temperature").getDouble(position);
-            int weatherCode = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("weather_code").getInt(position);
-            int precipitationProba = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("precipitation_probability").getInt(position);
-            double precipitation = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("precipitation").getDouble(position);
+            double temperature = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("temperature_2m").getDouble(realPosition);
+            double feelsLike = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("apparent_temperature").getDouble(realPosition);
+            int weatherCode = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("weather_code").getInt(realPosition);
+            int precipitationProba = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("precipitation_probability").getInt(realPosition);
+            double precipitation = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("precipitation").getDouble(realPosition);
 
             //icon
             String[] hourString = dayTimeString[timeloc].split(":");
