@@ -1,10 +1,179 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true">
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/background_color"
+    android:paddingTop="16dp"
     tools:context=".CreditsFragment">
 
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/ivHammock"
+        android:layout_width="211dp"
+        android:layout_height="259dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="17dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/bordercreditsimage"
+        android:src="@drawable/ivy_app_icon_foreground" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivHammock"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:text="Our App"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivHammock"
+        android:layout_below="@id/tvTitle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="IvyWeather aims to give the user a real time accurate weather information "
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivHammock"
+        android:layout_below="@id/tvSubtitle"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Developed by Vivian Morton and Isaac Ribeiro Leao during their 2nd year in Software Engeneering Tehcnology"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+    <TextView
+        android:id="@+id/tvMeeetOurDevelopers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivHammock"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="121dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="16dp"
+        android:text="Our Lead Developers"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/ivIsaac"
+        android:layout_width="146dp"
+        android:layout_height="170dp"
+        android:layout_below="@+id/tvMeeetOurDevelopers"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/bordercreditsimage"
+        android:scaleType="centerCrop"
+        android:src="@drawable/isaacgithubpfp" />
+
+    <TextView
+        android:id="@+id/tvIsaacTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="-57dp"
+        android:layout_marginTop="327dp"
+        android:layout_toRightOf="@id/ivHammock"
+        android:text="Isaac Ribeiro Leao"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/ivGitHubLink"
+        android:layout_width="46dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/tvMeeetOurDevelopers"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="299dp"
+        android:layout_marginTop="51dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="openGitHub"
+        android:src="@drawable/githublogo" />
+
+    <TextView
+        android:id="@+id/gotoGithub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="-9dp"
+        android:layout_marginTop="372dp"
+        android:layout_toRightOf="@id/ivHammock"
+        android:text="Github Link:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15dp" />
+
+    <ImageView
+        android:id="@+id/ivVivian"
+        android:layout_width="146dp"
+        android:layout_height="170dp"
+        android:layout_below="@+id/tvMeeetOurDevelopers"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="199dp"
+        android:background="@drawable/bordercreditsimage"
+        android:scaleType="centerCrop"
+        android:src="@drawable/vivianpfp" />
+
+    <TextView
+        android:id="@+id/tvVivianTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="-59dp"
+        android:layout_marginTop="511dp"
+        android:layout_toRightOf="@id/ivHammock"
+        android:text="Vivian Morton"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/VivianGithub"
+        android:layout_width="46dp"
+        android:layout_height="39dp"
+        android:layout_below="@+id/tvMeeetOurDevelopers"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="278dp"
+        android:layout_marginTop="240dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="openGitHubVivian"
+        android:src="@drawable/githublogo" />
+
+    <TextView
+        android:id="@+id/gotoGithubVivian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="-39dp"
+        android:layout_marginTop="562dp"
+        android:layout_toRightOf="@id/ivHammock"
+        android:text="Github Link:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15dp" />
+
+    <WebView
+        android:id="@+id/webviewGitHub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+
+
+</RelativeLayout>
+</ScrollView>
