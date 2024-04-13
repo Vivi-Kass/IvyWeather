@@ -45,7 +45,7 @@ public class DailyWeatherFragment extends Fragment {
 
         refreshPage = view.findViewById(R.id.swipe_refresh_layout_daily);
         location = view.findViewById(R.id.daily_location_text);
-        location.setText("City: " + IvyWeather.getCity());
+        location.setText("Daily Weather: " + IvyWeather.getCity());
 
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

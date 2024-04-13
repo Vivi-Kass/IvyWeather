@@ -162,7 +162,7 @@ public class CurrentWeatherFragment extends Fragment {
 
             currTemperature.setText(String.format(Locale.getDefault(), " %.1f°C", IvyWeather.getWeatherData().getJSONObject("current").getDouble("temperature_2m")));
             feelsTemp.setText(String.format(Locale.getDefault(), "Feels Like: %.1f°C",  IvyWeather.getWeatherData().getJSONObject("current").getDouble("apparent_temperature")));
-            userLocTV.setText("City: " + IvyWeather.getCity());
+            userLocTV.setText("Current Weather: " + IvyWeather.getCity());
             userLatitude.setText("Latitude: " + IvyWeather.getUserLocation().getLatitude());
             userLongitude.setText("Longitude: " + IvyWeather.getUserLocation().getLongitude());
             int code = IvyWeather.getWeatherData().getJSONObject("current").getInt("weather_code");

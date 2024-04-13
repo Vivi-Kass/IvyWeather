@@ -46,7 +46,7 @@ public class HourlyWeatherFragment extends Fragment {
 
         refreshPage = view.findViewById(R.id.swipe_refresh_layout_hourly);
         location = view.findViewById(R.id.hourly_location_text);
-        location.setText("City: " + IvyWeather.getCity());
+        location.setText("Hourly Weather: " + IvyWeather.getCity());
 
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
