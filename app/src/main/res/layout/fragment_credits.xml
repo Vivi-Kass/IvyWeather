@@ -15,8 +15,8 @@
 
     <ImageView
         android:id="@+id/ivHammock"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="17dp"
         android:scaleType="centerCrop"
@@ -45,7 +45,7 @@
         android:layout_below="@id/tvTitle"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="IvyWeather aims to give the user a real time accurate weather information "
+        android:text="IvyWeather aims to give the user a real time accurate weather information."
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 
@@ -197,14 +197,44 @@
         android:layout_below="@+id/tvVivianTitle"
         android:layout_alignEnd="@+id/tvVivianTitle"
         android:layout_alignStart="@+id/tvIsaacTitle"
-        android:layout_toRightOf="@id/ivHammock"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="Weather Icons Vectors by Vecteezy"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="@color/link"
         />
+
+    <TextView
+        android:id="@+id/api_credits_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/icon_credit_text"
+        android:layout_alignEnd="@+id/tvVivianTitle"
+        android:layout_alignStart="@+id/tvIsaacTitle"
+        android:layout_marginTop="30dp"
+        android:text="API by Open-Meteo"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textColor="@color/link"
+        />
+
+    <TextView
+        android:id="@+id/use_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/api_credits_text"
+        android:layout_alignEnd="@+id/tvVivianTitle"
+        android:layout_alignStart="@+id/tvIsaacTitle"
+        android:layout_marginTop="50dp"
+        android:text="App Designed for Non-Commercial Use"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        />
+
     <TextView
         android:id="@+id/icon_credit_link"
         android:layout_width="wrap_content"

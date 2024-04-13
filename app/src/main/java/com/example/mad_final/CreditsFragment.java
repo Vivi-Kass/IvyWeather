@@ -22,6 +22,7 @@ public class CreditsFragment extends Fragment {
     private final String vivianLink = "https://github.com/vivi-kiwi";
     private final String iconCreditLink = "https://www.vecteezy.com/free-vector/weather-icons";
     private final String repoLink = "https://github.com/vivi-kiwi/MAD-Final";
+    private final String APILink = "https://open-meteo.com";
 
 
     public CreditsFragment() {
@@ -53,38 +54,40 @@ public class CreditsFragment extends Fragment {
 
         TextView iconCredit = rootView.findViewById(R.id.icon_credit_text);
 
+        TextView apiCredit = rootView.findViewById(R.id.api_credits_text);
+
         tvIsaacTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGitHub(v,isaacLink);
+                openLink(v,isaacLink);
             }
         });
 
         isaacIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGitHub(v,isaacLink);
+                openLink(v,isaacLink);
             }
         });
 
         tvVivianTitle.setOnClickListener(new  View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                openGitHub(v,vivianLink);
+                openLink(v,vivianLink);
             }
         });
 
         vivianIcon.setOnClickListener(new  View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                openGitHub(v,vivianLink);
+                openLink(v,vivianLink);
             }
         });
 
         appLogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGitHub(v,repoLink);
+                openLink(v,repoLink);
             }
         });
 
@@ -92,7 +95,14 @@ public class CreditsFragment extends Fragment {
         iconCredit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGitHub(v,iconCreditLink);
+                openLink(v,iconCreditLink);
+            }
+        });
+
+        apiCredit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLink(v,APILink);
             }
         });
 
@@ -100,7 +110,7 @@ public class CreditsFragment extends Fragment {
         return rootView;
     }
 
-    public void openGitHub(View view, String link) {
+    public void openLink(View view, String link) {
 
         if (!link.startsWith("http://") && !link.startsWith("https://")) {
 
