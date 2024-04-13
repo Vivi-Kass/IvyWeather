@@ -55,6 +55,10 @@ public class CurrentWeatherFragment extends Fragment {
     private TextView feelsTemp;
     private TextView weatherCode;
     private ImageView weatherIcon;
+    private TextView tempHigh;
+    private TextView tempLow;
+    private TextView humidity;
+    private TextView precipAmount;
     private Handler handler = new Handler();
 
     Location userLocation;
@@ -92,6 +96,10 @@ public class CurrentWeatherFragment extends Fragment {
         feelsTemp = rootView.findViewById(R.id.feels_temp);
         weatherCode = rootView.findViewById(R.id.weather_code);
         weatherIcon = rootView.findViewById(R.id.weather_icon);
+        precipAmount = rootView.findViewById(R.id.precip_amount);
+        humidity = rootView.findViewById(R.id.humidity_amount);
+        tempHigh = rootView.findViewById(R.id.temp_high);
+        tempLow = rootView.findViewById(R.id.temp_low);
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -152,10 +160,8 @@ public class CurrentWeatherFragment extends Fragment {
 
             int hour = currentTime.getHours();
 
-            double temperature = IvyWeather.getWeatherData().getJSONObject("current").getDouble("temperature_2m"); // Adjust based on actual structure
-            double feelsLike = IvyWeather.getWeatherData().getJSONObject("current").getDouble("apparent_temperature"); // Adjust based on actual structure
-            currTemperature.setText(String.format(Locale.getDefault(), " %.1f°C", temperature));
-            feelsTemp.setText(String.format(Locale.getDefault(), "Feels Like: %.1f°C",  feelsLike));
+            currTemperature.setText(String.format(Locale.getDefault(), " %.1f°C", IvyWeather.getWeatherData().getJSONObject("current").getDouble("temperature_2m")));
+            feelsTemp.setText(String.format(Locale.getDefault(), "Feels Like: %.1f°C",  IvyWeather.getWeatherData().getJSONObject("current").getDouble("apparent_temperature")));
             userLocTV.setText("City: " + IvyWeather.getCity());
             userLatitude.setText("Latitude: " + IvyWeather.getUserLocation().getLatitude());
             userLongitude.setText("Longitude: " + IvyWeather.getUserLocation().getLongitude());
@@ -164,6 +170,13 @@ public class CurrentWeatherFragment extends Fragment {
             int isDay = IvyWeather.getWeatherData().getJSONObject("current").getInt("is_day");
 
             weatherIcon.setImageDrawable(WeatherCodeHandler.getIcon(code, isDay, requireContext()));
+
+            tempHigh.setText("H: " + String.format(Locale.getDefault(), " %.1f°C", IvyWeather.getWeatherData().getJSONObject("daily").getJSONArray("temperature_2m_max").getDouble(0)));
+            tempLow.setText("L: " + String.format(Locale.getDefault(), " %.1f°C", IvyWeather.getWeatherData().getJSONObject("daily").getJSONArray("temperature_2m_min").getDouble(0)));
+
+            precipAmount.setText(Double.toString(IvyWeather.getWeatherData().getJSONObject("current").getDouble("precipitation")) + "mm");
+            humidity.setText("Humidity: " + IvyWeather.getWeatherData().getJSONObject("current").getInt("relative_humidity_2m") + "%");
+
 
 
         } catch (Exception e) {

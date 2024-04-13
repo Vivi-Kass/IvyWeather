@@ -99,12 +99,62 @@
             android:layout_marginTop="16dp"
             android:textSize="24sp"/>
 
+
+        <TextView
+            android:id="@+id/temp_high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/weather_code"
+            android:layout_marginStart="80dp"
+            android:text="High: 50"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_color"
+            android:layout_marginTop="20dp"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/temp_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/weather_code"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="80dp"
+            android:text="Low: 20"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_color"
+            android:layout_marginTop="20dp"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/humidity_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/precip_amount"
+            android:layout_centerHorizontal="true"
+            android:text="Humidity"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_color"
+            android:layout_marginTop="20dp"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/precip_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/temp_low"
+            android:layout_centerHorizontal="true"
+            android:text="0.00mm"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/text_color"
+            android:layout_marginTop="20dp"
+            android:textSize="24sp"/>
+
         <Button
             android:id="@+id/more_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/weather_code"
-            android:layout_marginTop="32dp"
+            android:layout_below="@id/humidity_amount"
+            android:layout_marginTop="35dp"
             android:background="@color/button_color"
             android:text="More Details"
             android:textColor="@color/text_color"
