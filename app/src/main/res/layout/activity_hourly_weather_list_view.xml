@@ -11,9 +11,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="5dp"
         android:text="04-11"
         android:id="@+id/hourly_date"
+        android:textColor="@color/text_color"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/hourly_date"
+        android:text="Sat"
+        android:textStyle="bold"
+        android:id="@+id/hourly_day"
+        android:layout_marginTop="10dp"
         android:textColor="@color/text_color"
         />
 
@@ -23,12 +35,12 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/hourly_date"
         android:layout_alignEnd="@id/hourly_date"
-        android:layout_below="@id/hourly_date"
+        android:layout_below="@id/hourly_day"
         android:text="15:00"
         android:id="@+id/hourly_time"
         android:textColor="@color/text_color"
         android:textStyle="bold"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:textAlignment="center"
         />

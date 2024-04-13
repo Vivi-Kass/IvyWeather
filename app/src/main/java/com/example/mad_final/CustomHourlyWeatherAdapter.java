@@ -15,6 +15,9 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,6 +69,7 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
         int realPosition = position + offset;
         String dayTimeString[] = null;
 
+        TextView day = convertView.findViewById(R.id.hourly_day);
         TextView date = convertView.findViewById(R.id.hourly_date);
         TextView time = convertView.findViewById(R.id.hourly_time);
         ImageView icon = convertView.findViewById(R.id.weather_icon_hourly);
@@ -83,6 +87,13 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
             //remove first 5 chars
             String dateShort = dayTimeString[dateloc].substring(5, dayTimeString[dateloc].length());
             date.setText(dateShort);
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                LocalDate localDate = LocalDate.parse(dayTimeString[dateloc]);
+                DayOfWeek dayOfWeek = localDate.getDayOfWeek();
+                String fullname = dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault());
+                day.setText(fullname.substring(0,3)); //3 letters
+            }
 
 
             double temperature = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("temperature_2m").getDouble(realPosition);
