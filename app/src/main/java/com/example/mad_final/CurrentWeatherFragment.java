@@ -171,8 +171,8 @@ public class CurrentWeatherFragment extends Fragment {
 
             weatherIcon.setImageDrawable(WeatherCodeHandler.getIcon(code, isDay, requireContext()));
 
-            tempHigh.setText("H: " + String.format(Locale.getDefault(), " %.1f°C", IvyWeather.getWeatherData().getJSONObject("daily").getJSONArray("temperature_2m_max").getDouble(0)));
-            tempLow.setText("L: " + String.format(Locale.getDefault(), " %.1f°C", IvyWeather.getWeatherData().getJSONObject("daily").getJSONArray("temperature_2m_min").getDouble(0)));
+            tempHigh.setText("H:" + String.format(Locale.getDefault(), " %.1f°C", IvyWeather.getWeatherData().getJSONObject("daily").getJSONArray("temperature_2m_max").getDouble(0)));
+            tempLow.setText("L:" + String.format(Locale.getDefault(), " %.1f°C", IvyWeather.getWeatherData().getJSONObject("daily").getJSONArray("temperature_2m_min").getDouble(0)));
 
             precipAmount.setText(Double.toString(IvyWeather.getWeatherData().getJSONObject("current").getDouble("precipitation")) + "mm");
             humidity.setText("Humidity: " + IvyWeather.getWeatherData().getJSONObject("current").getInt("relative_humidity_2m") + "%");
