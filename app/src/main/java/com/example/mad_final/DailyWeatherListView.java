@@ -17,11 +17,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.mad_final.databinding.ActivityDailyWeatherListViewBinding;
 
 public class DailyWeatherListView extends AppCompatActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_daily_weather_list_view);
     }
 
 }

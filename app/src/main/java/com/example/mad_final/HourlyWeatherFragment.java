@@ -1,50 +1,23 @@
 package com.example.mad_final;
 
-import static android.content.ContentValues.TAG;
-
-import android.annotation.SuppressLint;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 
 public class HourlyWeatherFragment extends Fragment {
 
     private SwipeRefreshLayout refreshPage;
     private TextView location;
-    private Handler handler = new Handler();
     private ListView listView;
     private int offset;
-
     private static int hoursCount = 168; // 7 days each with 24 hours
     private CustomHourlyWeatherAdapter customHourlyWeatherAdapter;
 
@@ -52,7 +25,7 @@ public class HourlyWeatherFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static HourlyWeatherFragment newInstance(String param1, String param2) {
+    public static HourlyWeatherFragment newInstance() {
         return new HourlyWeatherFragment();
     }
 

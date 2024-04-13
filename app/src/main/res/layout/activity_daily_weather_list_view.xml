@@ -12,8 +12,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
+        android:layout_marginBottom="30dp"
         android:text="04-11"
         android:id="@+id/daily_date"
         android:textColor="@color/text_color"
@@ -27,7 +28,7 @@
         android:layout_height="50dp"
         android:id="@+id/weather_icon_daily"
         android:layout_alignStart="@id/daily_date"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="65dp"
         android:layout_marginTop="4dp"
         android:src="@drawable/clouds"
 
@@ -44,7 +45,7 @@
         android:layout_marginEnd="-20dp"
         android:text="Freezing Rain"
         android:textAlignment="center"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="0dp"
         android:textColor="@color/text_color" />
 
 
@@ -79,7 +80,7 @@
         android:layout_alignStart="@+id/daily_feel_view"
         android:layout_marginStart="60dp"
         android:layout_marginTop="25dp"
-        android:text="H: 127"
+        android:text="H:127"
         android:id="@+id/daily_temp_high"
         android:textColor="@color/text_color"
         android:textAlignment="center"
@@ -115,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/daily_temp_high"
         android:layout_alignStart="@+id/daily_temp_low"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="10dp"
         android:text="0.00mm"
         android:id="@+id/daily_precip_amount"

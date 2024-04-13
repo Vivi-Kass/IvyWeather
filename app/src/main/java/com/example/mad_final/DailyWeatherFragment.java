@@ -1,18 +1,22 @@
 package com.example.mad_final;
 
 import android.os.Bundle;
-
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class DailyWeatherFragment extends Fragment {
 
     private SwipeRefreshLayout refreshPage;
+    private TextView location;
+    private ListView listView;
+    private CustomDailyWeatherAdapter customDailyWeatherAdapter;
 
     public DailyWeatherFragment() {
         // Required empty public constructor
@@ -30,37 +34,55 @@ public class DailyWeatherFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_daily_weather, container, false);
 
+        listView = view.findViewById(R.id.daily_weather_view);
+
+        customDailyWeatherAdapter = new CustomDailyWeatherAdapter(requireContext());
+        listView.setAdapter(customDailyWeatherAdapter);
+
         refreshPage = view.findViewById(R.id.swipe_refresh_layout_daily);
+        location = view.findViewById(R.id.daily_location_text);
+        location.setText("City: " + IvyWeather.getCity());
 
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
                 if (PermissionChecker.checkPermissions(requireActivity())) {
-                    //updateWeather();
-                    Toast.makeText(getContext(), "Page updated", Toast.LENGTH_SHORT).show();
+                    updateWeather();
+                } else {
+                    Toast.makeText(getContext(), "Insufficient permissions to update weather data.", Toast.LENGTH_SHORT).show();
                 }
                 refreshPage.setRefreshing(false);
             }
         });
-
-
-
         return view;
     }
 
+    private void updateWeather() {
+
+        IvyWeather ivyWeather = (IvyWeather) getActivity().getApplication();
+        ivyWeather.updateWeather(new IvyWeather.WeatherUpdateListener() {
+            @Override
+            public void onWeatherUpdateComplete() {
+                getActivity().runOnUiThread(() -> {
+                    updateUI();
+                    Toast.makeText(getContext(), "Weather data updated.", Toast.LENGTH_SHORT).show();
+                });
+            }
+
+            @Override
+            public void onWeatherUpdateFailed(Exception e) {
+                getActivity().runOnUiThread(() -> Toast.makeText(getContext(), "Failed to update weather data: " + e.getMessage(), Toast.LENGTH_LONG).show());
+            }
+        }, getContext());
+    }
     private void updateUI() {
-        try {
-            // parse through JSON to get the hourly temperature
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        customDailyWeatherAdapter = new CustomDailyWeatherAdapter(requireContext());
+        listView.setAdapter(customDailyWeatherAdapter);
+        customDailyWeatherAdapter.notifyDataSetChanged();
     }
 
 
