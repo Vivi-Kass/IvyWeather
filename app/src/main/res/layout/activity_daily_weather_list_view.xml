@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".DailyWeatherListView">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:text="04-11"
+        android:id="@+id/daily_date"
+        android:textColor="@color/text_color"
+        />
+
+
+
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/weather_icon_daily"
+        android:layout_alignStart="@id/daily_date"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/clouds"
+
+        />
+
+    <TextView
+        android:id="@+id/daily_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/weather_icon_daily"
+        android:layout_alignStart="@+id/weather_icon_daily"
+        android:layout_alignEnd="@id/weather_icon_daily"
+        android:layout_marginStart="-20dp"
+        android:layout_marginEnd="-20dp"
+        android:text="Freezing Rain"
+        android:textAlignment="center"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/text_color" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/daily_feel_view"
+        android:layout_marginTop="25dp"
+        android:text="Temp:"
+        android:id="@+id/daily_temp_view"
+        android:textColor="@color/text_color"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="80dp"
+        android:layout_alignStart="@+id/weather_icon_daily"
+        android:layout_below="@id/daily_temp_view"
+        android:text="23.5C"
+        android:id="@+id/daily_feel_view"
+        android:textColor="@color/text_color"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/daily_feel_view"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="25dp"
+        android:text="H: 127"
+        android:id="@+id/daily_temp_high"
+        android:textColor="@color/text_color"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/daily_temp_high"
+        android:layout_below="@+id/daily_temp_high"
+        android:layout_marginTop="10dp"
+        android:text="L:128"
+        android:id="@+id/daily_temp_low"
+        android:textColor="@color/text_color"
+        android:layout_alignEnd="@id/daily_temp_high"
+        android:textAlignment="center"
+        />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="UV:4.7"
+        android:id="@+id/daily_uv_index"
+        android:textColor="@color/text_color"
+        android:textAlignment="center"
+        android:layout_alignStart="@+id/daily_precip_amount"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/daily_temp_high"
+        android:layout_alignStart="@+id/daily_temp_low"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
+        android:text="0.00mm"
+        android:id="@+id/daily_precip_amount"
+        android:textColor="@color/text_color"
+        android:textAlignment="center"
+        />
+
+
+</RelativeLayout>
