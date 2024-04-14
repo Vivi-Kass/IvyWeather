@@ -44,7 +44,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static IvyWeather singleton;
+
     private FrameLayout framelayout;
     private TextView textView;
     private Button button;
@@ -53,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private final String needLocation = "This app needs the location to be allowed in order to work.\n Please enable it in settings.";
 
 
-    public IvyWeather getInstance(){
-        return singleton;
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        singleton = this.getInstance();
+
 
 
         framelayout = findViewById(R.id.fragment_frame);
@@ -160,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        // Trigger immediate weather update
+        // Trigger an immediate weather update
         IvyWeather ivyWeather = (IvyWeather) getApplication();
         IvyWeather.getInstance().updateWeather(new IvyWeather.WeatherUpdateListener() {
             @Override
