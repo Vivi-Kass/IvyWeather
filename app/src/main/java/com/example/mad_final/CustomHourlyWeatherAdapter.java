@@ -70,7 +70,7 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
         String dayTimeString[] = null;
 
         TextView day = convertView.findViewById(R.id.hourly_day);
-        TextView date = convertView.findViewById(R.id.hourly_date);
+        //TextView date = convertView.findViewById(R.id.hourly_date);
         TextView time = convertView.findViewById(R.id.hourly_time);
         ImageView icon = convertView.findViewById(R.id.weather_icon_hourly);
         TextView code = convertView.findViewById(R.id.hourly_code);
@@ -85,8 +85,8 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
 
             time.setText(dayTimeString[timeloc]);
             //remove first 5 chars
-            String dateShort = dayTimeString[dateloc].substring(5, dayTimeString[dateloc].length());
-            date.setText(dateShort);
+            //String dateShort = dayTimeString[dateloc].substring(5, dayTimeString[dateloc].length());
+            //date.setText(dateShort);
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 LocalDate localDate = LocalDate.parse(dayTimeString[dateloc]);
