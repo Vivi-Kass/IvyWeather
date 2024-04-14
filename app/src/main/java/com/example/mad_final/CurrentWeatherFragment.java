@@ -59,6 +59,8 @@ public class CurrentWeatherFragment extends Fragment {
     private TextView tempLow;
     private TextView humidity;
     private TextView precipAmount;
+
+    private View rootView;
     private Handler handler = new Handler();
 
     Location userLocation;
@@ -83,7 +85,7 @@ public class CurrentWeatherFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        View rootView = inflater.inflate(R.layout.fragment_view_weather, container, false);
+        rootView = inflater.inflate(R.layout.fragment_view_weather, container, false);
 
         // Initialize TextViews and buttons here so they are ready for updates
         userLatitude = rootView.findViewById(R.id.lat_loc);
@@ -162,7 +164,7 @@ public class CurrentWeatherFragment extends Fragment {
 
             currTemperature.setText(String.format(Locale.getDefault(), " %.1f°C", IvyWeather.getWeatherData().getJSONObject("current").getDouble("temperature_2m")));
             feelsTemp.setText(String.format(Locale.getDefault(), "Feels Like: %.1f°C",  IvyWeather.getWeatherData().getJSONObject("current").getDouble("apparent_temperature")));
-            userLocTV.setText("Current Weather: " + IvyWeather.getCity());
+            userLocTV.setText(IvyWeather.getCity()+ " \uD83C\uDF10");
             userLatitude.setText("Latitude: " + IvyWeather.getUserLocation().getLatitude());
             userLongitude.setText("Longitude: " + IvyWeather.getUserLocation().getLongitude());
             int code = IvyWeather.getWeatherData().getJSONObject("current").getInt("weather_code");
@@ -178,6 +180,38 @@ public class CurrentWeatherFragment extends Fragment {
             humidity.setText("Humidity: " + IvyWeather.getWeatherData().getJSONObject("current").getInt("relative_humidity_2m") + "%");
 
 
+            //check the current time, if its night than change the background
+            Calendar calendar = Calendar.getInstance();
+            int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+
+            if (hourOfDay >= 18 || hourOfDay < 6) {
+                rootView.setBackgroundResource(R.drawable.backgroundmain_night);
+                userLocTV.setTextColor(getResources().getColor(R.color.text_night));
+                currTemperature.setTextColor(getResources().getColor(R.color.text_night));
+                feelsTemp.setTextColor(getResources().getColor(R.color.text_night));
+                userLatitude.setTextColor(getResources().getColor(R.color.text_night));
+                userLongitude.setTextColor(getResources().getColor(R.color.text_night));
+                weatherCode.setTextColor(getResources().getColor(R.color.text_night));
+                tempHigh.setTextColor(getResources().getColor(R.color.text_night));
+                tempLow.setTextColor(getResources().getColor(R.color.text_night));
+                precipAmount.setTextColor(getResources().getColor(R.color.text_night));
+                humidity.setTextColor(getResources().getColor(R.color.text_night));
+
+
+            } else {
+                rootView.setBackgroundResource(R.drawable.backroundmainpage);
+                userLocTV.setTextColor(getResources().getColor(R.color.text_day));
+                currTemperature.setTextColor(getResources().getColor(R.color.text_day));
+                feelsTemp.setTextColor(getResources().getColor(R.color.text_day));
+                userLatitude.setTextColor(getResources().getColor(R.color.text_day));
+                userLongitude.setTextColor(getResources().getColor(R.color.text_day));
+                weatherCode.setTextColor(getResources().getColor(R.color.text_day));
+                tempHigh.setTextColor(getResources().getColor(R.color.text_day));
+                tempLow.setTextColor(getResources().getColor(R.color.text_day));
+                precipAmount.setTextColor(getResources().getColor(R.color.text_day));
+                humidity.setTextColor(getResources().getColor(R.color.text_day));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

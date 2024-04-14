@@ -11,6 +11,7 @@ package com.example.mad_final;
 
 import static android.content.ContentValues.TAG;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -38,11 +39,12 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private static IvyWeather singleton;
     private FrameLayout framelayout;
     private TextView textView;
     private Button button;
@@ -50,11 +52,18 @@ public class MainActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private final String needLocation = "This app needs the location to be allowed in order to work.\n Please enable it in settings.";
 
+
+    public IvyWeather getInstance(){
+        return singleton;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
@@ -82,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                     .putBoolean("show_notifications", isChecked)
                     .apply();
 
-
             if (isChecked) {
                 scheduleWeatherUpdates();
             } else {
@@ -103,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        singleton = this.getInstance();
+
 
         framelayout = findViewById(R.id.fragment_frame);
         textView = findViewById(R.id.text_info);
@@ -150,11 +160,24 @@ public class MainActivity extends AppCompatActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        // Schedule the alarm to trigger every hour
-        long interval = 3600000; // 1 hour in milliseconds
-        long startTime = System.currentTimeMillis() + interval;
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startTime, interval, pendingIntent);
-        Toast.makeText(this, "Notifications scheduled", Toast.LENGTH_SHORT).show();
+        // Trigger immediate weather update
+        IvyWeather ivyWeather = (IvyWeather) getApplication();
+        IvyWeather.getInstance().updateWeather(new IvyWeather.WeatherUpdateListener() {
+            @Override
+            public void onWeatherUpdateComplete() {
+                // Weather update is complete, now we can schedule the repeating updates
+                long interval = 3600000; // 1 hour interval
+                long startTime = System.currentTimeMillis(); // Immediate start
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startTime, interval, pendingIntent);
+                Toast.makeText(IvyWeather.getInstance(), "Weather update scheduled", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onWeatherUpdateFailed(Exception e) {
+                Toast.makeText(IvyWeather.getInstance(), "Failed to schedule weather update: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }, this);
     }
 
     private void cancelWeatherUpdates() {

@@ -12,5 +12,11 @@
     <color name="link">#0000EE</color>
     <color name="strong_orange">#E5A020</color>
     <color name="light_orange">#E8BE71</color>
+    <color name="checkbox_color">#0000EE</color>
+    <color name="checkbox_checked_color">#CCE1F3</color>
+    <color name="checkbox_unchecked_color">#0000EE</color>
+    <color name="text_day">#000000</color>
+    <color name="text_night">#ADD8E6</color>
+    <color name="divider_color">#ADD8E6</color>
 
 </resources>

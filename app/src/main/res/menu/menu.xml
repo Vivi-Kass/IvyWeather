@@ -18,6 +18,7 @@
         android:id="@+id/show_notifications"
         android:title="@string/show_notifications"
         android:checkable="true"
+        android:buttonTint="@drawable/checboxnotis"
         />
     <item
         android:id="@+id/credits"

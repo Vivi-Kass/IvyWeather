@@ -10,6 +10,8 @@
 package com.example.mad_final;
 
 import android.app.Application;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -63,7 +65,7 @@ public class IvyWeather extends Application {
         IvyWeather.weatherData = weatherData;
     }
 
-    public IvyWeather getInstance(){
+    public static IvyWeather getInstance(){
         return singleton;
     }
 
@@ -95,7 +97,7 @@ public class IvyWeather extends Application {
 
 
     public interface WeatherUpdateListener {
-        void onWeatherUpdateComplete();
+        void onWeatherUpdateComplete() throws JSONException;
         void onWeatherUpdateFailed(Exception e);
     }
     public void updateWeather(WeatherUpdateListener listener, Context context) {
@@ -119,7 +121,11 @@ public class IvyWeather extends Application {
                                     public void onDataFetched(JSONObject jsonData) {
                                         setWeatherData(jsonData);
                                         setCity(getUserLocation(), context);
-                                        listener.onWeatherUpdateComplete();
+                                        try {
+                                            listener.onWeatherUpdateComplete();
+                                        } catch (JSONException e) {
+                                            throw new RuntimeException(e);
+                                        }
                                     }
                                 });
                             } else {
