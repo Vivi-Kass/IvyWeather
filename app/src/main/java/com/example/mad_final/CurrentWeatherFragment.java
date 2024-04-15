@@ -18,6 +18,7 @@ import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -183,39 +184,33 @@ public class CurrentWeatherFragment extends Fragment {
             //check the current time, if its night than change the background
             Calendar calendar = Calendar.getInstance();
             int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+            boolean isNight = hourOfDay >= 18 || hourOfDay < 6;
 
-
-            if (hourOfDay >= 18 || hourOfDay < 6) {
-                rootView.setBackgroundResource(R.drawable.backgroundmain_night);
-                userLocTV.setTextColor(getResources().getColor(R.color.text_night));
-                currTemperature.setTextColor(getResources().getColor(R.color.text_night));
-                feelsTemp.setTextColor(getResources().getColor(R.color.text_night));
-                userLatitude.setTextColor(getResources().getColor(R.color.text_night));
-                userLongitude.setTextColor(getResources().getColor(R.color.text_night));
-                weatherCode.setTextColor(getResources().getColor(R.color.text_night));
-                tempHigh.setTextColor(getResources().getColor(R.color.text_night));
-                tempLow.setTextColor(getResources().getColor(R.color.text_night));
-                precipAmount.setTextColor(getResources().getColor(R.color.text_night));
-                humidity.setTextColor(getResources().getColor(R.color.text_night));
-
-
-            } else {
-                rootView.setBackgroundResource(R.drawable.backroundmainpage);
-                userLocTV.setTextColor(getResources().getColor(R.color.text_day));
-                currTemperature.setTextColor(getResources().getColor(R.color.text_day));
-                feelsTemp.setTextColor(getResources().getColor(R.color.text_day));
-                userLatitude.setTextColor(getResources().getColor(R.color.text_day));
-                userLongitude.setTextColor(getResources().getColor(R.color.text_day));
-                weatherCode.setTextColor(getResources().getColor(R.color.text_day));
-                tempHigh.setTextColor(getResources().getColor(R.color.text_day));
-                tempLow.setTextColor(getResources().getColor(R.color.text_day));
-                precipAmount.setTextColor(getResources().getColor(R.color.text_day));
-                humidity.setTextColor(getResources().getColor(R.color.text_day));
-            }
+            DayNightMode(isNight);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void DayNightMode(boolean isNight){
+        int backgroundColor = isNight ? R.drawable.backgroundmain_night : R.drawable.backroundmainpage;
+        int textColor = isNight ? R.color.text_night : R.color.text_day;
+        int trueTextColor = ContextCompat.getColor(rootView.getContext(), textColor);
+
+
+        rootView.setBackgroundResource(backgroundColor);
+        userLocTV.setTextColor(trueTextColor);
+        currTemperature.setTextColor(trueTextColor);
+        feelsTemp.setTextColor(trueTextColor);
+        userLatitude.setTextColor(trueTextColor);
+        userLongitude.setTextColor(trueTextColor);
+        weatherCode.setTextColor(trueTextColor);
+        tempHigh.setTextColor(trueTextColor);
+        tempLow.setTextColor(trueTextColor);
+        precipAmount.setTextColor(trueTextColor);
+        humidity.setTextColor(trueTextColor);
     }
 
 

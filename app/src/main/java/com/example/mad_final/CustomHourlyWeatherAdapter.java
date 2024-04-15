@@ -12,6 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+
 public class CustomHourlyWeatherAdapter extends BaseAdapter {
     private Context context;
 
@@ -33,6 +36,20 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
 
     private final int dateloc = 0;
     private final int timeloc = 1;
+
+    private  TextView day;
+
+    private TextView time;
+
+    private TextView code;
+
+    private TextView temperatureText;
+
+    private  TextView feels;
+
+    private TextView precipitationProb;
+
+    private TextView precipitationAmount;
 
 
     public CustomHourlyWeatherAdapter(Context ctx) {
@@ -58,35 +75,42 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
         return 0;
     }
 
-    @SuppressLint("RestrictedApi")
+    @SuppressLint({"RestrictedApi", "ResourceAsColor"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.activity_hourly_weather_list_view, parent, false);
         }
 
-
         int realPosition = position + offset;
         String dayTimeString[] = null;
 
-        TextView day = convertView.findViewById(R.id.hourly_day);
+        day = convertView.findViewById(R.id.hourly_day);
         //TextView date = convertView.findViewById(R.id.hourly_date);
-        TextView time = convertView.findViewById(R.id.hourly_time);
+        time = convertView.findViewById(R.id.hourly_time);
         ImageView icon = convertView.findViewById(R.id.weather_icon_hourly);
-        TextView code = convertView.findViewById(R.id.hourly_code);
-        TextView temperatureText = convertView.findViewById(R.id.hourly_temp_view);
-        TextView feels = convertView.findViewById(R.id.hourly_feel_view);
-        TextView precipitationProb = convertView.findViewById(R.id.hourly_precipitation_prob);
-        TextView precipitationAmount = convertView.findViewById(R.id.hourly_precipitation_amount);
+        code = convertView.findViewById(R.id.hourly_code);
+        temperatureText = convertView.findViewById(R.id.hourly_temp_view);
+        feels = convertView.findViewById(R.id.hourly_feel_view);
+        precipitationProb = convertView.findViewById(R.id.hourly_precipitation_prob);
+        precipitationAmount = convertView.findViewById(R.id.hourly_precipitation_amount);
 
 
         try{
+//            String[] hourStrings = dayTimeString[timeloc].split(":");
+//            int hour = Integer.parseInt(hourString[0]);
+
+
+
+
             dayTimeString = IvyWeather.getWeatherData().getJSONObject("hourly").getJSONArray("time").getString(realPosition).split("T");
 
             time.setText(dayTimeString[timeloc]);
             //remove first 5 chars
             //String dateShort = dayTimeString[dateloc].substring(5, dayTimeString[dateloc].length());
             //date.setText(dateShort);
+
+
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 LocalDate localDate = LocalDate.parse(dayTimeString[dateloc]);
@@ -105,6 +129,8 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
             //icon
             String[] hourString = dayTimeString[timeloc].split(":");
             int hour = Integer.parseInt(hourString[0]);
+            boolean isNight = hour >= 18 || hour < 6;
+
             int isday = 1; //day
             if (hour >= 18 || hour <= 6)
             {
@@ -124,6 +150,12 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
 
             precipitationProb.setText("P.O.P: " + Integer.toString(precipitationProba) + "%");
             precipitationAmount.setText(String.format(Locale.getDefault(), "%.2fmm",  precipitation));
+
+
+
+            DayNightMode(convertView, isNight);
+
+
         }
         catch (Exception e)
         {
@@ -133,6 +165,24 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
 
 
         return convertView;
+    }
+
+
+
+    private void DayNightMode(View convertView, boolean isNight){
+        int backgroundColor = isNight ? R.drawable.backgroundmain_night : R.drawable.backroundmainpage;
+        int textColor = isNight ? R.color.text_night : R.color.text_day;
+        int trueTextColor = ContextCompat.getColor(convertView.getContext(), textColor);
+
+
+        convertView.setBackgroundResource(backgroundColor);
+        precipitationProb.setTextColor(trueTextColor);
+        feels.setTextColor(trueTextColor);
+        precipitationAmount.setTextColor(trueTextColor);
+        temperatureText.setTextColor(trueTextColor);
+        code.setTextColor(trueTextColor);
+        time.setTextColor(trueTextColor);
+        day.setTextColor(trueTextColor);
     }
 
 

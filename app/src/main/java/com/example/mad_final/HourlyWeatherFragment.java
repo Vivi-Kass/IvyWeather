@@ -1,7 +1,9 @@
 package com.example.mad_final;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -11,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 
 public class HourlyWeatherFragment extends Fragment {
 
@@ -19,6 +23,9 @@ public class HourlyWeatherFragment extends Fragment {
     private ListView listView;
     private int offset;
     private static int hoursCount = 168; // 7 days each with 24 hours
+
+
+    private View rootView;
     private CustomHourlyWeatherAdapter customHourlyWeatherAdapter;
 
     public HourlyWeatherFragment() {
@@ -34,10 +41,21 @@ public class HourlyWeatherFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //check the current time, if its night than change the background
+
+
+
         View view = inflater.inflate(R.layout.fragment_hourly_weather, container, false);
+
+        Calendar calendar = Calendar.getInstance();
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        boolean isNight = hourOfDay >= 18 || hourOfDay < 6;
+        int backgroundColor = isNight ? R.drawable.backgroundmain_night : R.drawable.backroundmainpage;
+        int textColor = isNight ? R.color.text_night : R.color.text_day;
 
         listView = view.findViewById(R.id.hourly_weather_view);
 
@@ -47,6 +65,11 @@ public class HourlyWeatherFragment extends Fragment {
         refreshPage = view.findViewById(R.id.swipe_refresh_layout_hourly);
         location = view.findViewById(R.id.hourly_location_text);
         location.setText("Hourly Weather: " + IvyWeather.getCity());
+
+
+        // check why background behind
+        view.setBackgroundResource(backgroundColor);
+        location.setTextColor(getResources().getColor(textColor));
 
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -81,10 +104,12 @@ public class HourlyWeatherFragment extends Fragment {
             }
         }, getContext());
     }
+
     private void updateUI() {
         customHourlyWeatherAdapter = new CustomHourlyWeatherAdapter(requireContext());
         listView.setAdapter(customHourlyWeatherAdapter);
         customHourlyWeatherAdapter.notifyDataSetChanged();
+
     }
 
 }

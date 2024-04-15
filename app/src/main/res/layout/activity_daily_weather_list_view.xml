@@ -14,7 +14,6 @@
         android:layout_marginTop="25dp"
         android:text="Saturday"
         android:id="@+id/daily_day"
-        android:textColor="@color/text_color"
         />
 
 
@@ -26,7 +25,6 @@
         android:layout_marginTop="10dp"
         android:text="04-11"
         android:id="@+id/daily_date"
-        android:textColor="@color/text_color"
         />
 
 
@@ -53,8 +51,7 @@
         android:text="Freezing Rain"
         android:textAlignment="center"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="15dp"
-        android:textColor="@color/text_color" />
+        android:layout_marginBottom="15dp" />
 
 
     <TextView
@@ -64,7 +61,6 @@
         android:layout_marginTop="25dp"
         android:text="temp H"
         android:id="@+id/daily_temp_high"
-        android:textColor="@color/text_color"
         android:textAlignment="center"
         />
 
@@ -77,8 +73,7 @@
         android:layout_marginStart="90dp"
         android:layout_marginTop="10dp"
         android:text="Temp L"
-        android:textAlignment="center"
-        android:textColor="@color/text_color" />
+        android:textAlignment="center" />
 
 
 
@@ -90,8 +85,7 @@
         android:layout_alignStart="@+id/daily_precip_amount"
         android:layout_marginTop="25dp"
         android:text="UV:4.7"
-        android:textAlignment="center"
-        android:textColor="@color/text_color" />
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,7 +96,6 @@
         android:layout_marginTop="10dp"
         android:text="0.00mm"
         android:id="@+id/daily_precip_amount"
-        android:textColor="@color/text_color"
         android:textAlignment="center"
         />
 

@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:text="15:00"
         android:id="@+id/hourly_time"
-        android:textColor="@color/text_color"
         android:textStyle="bold"
         android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
@@ -28,7 +27,6 @@
         android:layout_below="@id/hourly_time"
         android:id="@+id/hourly_day"
         android:layout_marginTop="10dp"
-        android:textColor="@color/text_color"
         android:layout_marginBottom="15dp"
         />
 
@@ -40,7 +38,6 @@
         android:layout_below="@+id/hourly_day"
         android:text="04-11"
         android:id="@+id/hourly_date"
-        android:textColor="@color/text_color"
         android:layout_marginBottom="10dp"
         android:visibility="gone"
         />
@@ -67,8 +64,7 @@
         android:layout_marginEnd="-20dp"
         android:text="Freezing Rain"
         android:textAlignment="center"
-        android:layout_marginTop="6dp"
-        android:textColor="@color/text_color" />
+        android:layout_marginTop="6dp" />
 
 
     <TextView
@@ -78,7 +74,6 @@
         android:layout_marginTop="25dp"
         android:text="Temp:"
         android:id="@+id/hourly_temp_view"
-        android:textColor="@color/text_color"
         android:textStyle="bold"
         android:textAlignment="center"
         />
@@ -92,7 +87,6 @@
         android:layout_below="@id/hourly_temp_view"
         android:text="23.5C"
         android:id="@+id/hourly_feel_view"
-        android:textColor="@color/text_color"
         android:textAlignment="center"
         />
 
@@ -104,7 +98,6 @@
         android:layout_marginTop="25dp"
         android:text="P.O.P: 100%"
         android:id="@+id/hourly_precipitation_prob"
-        android:textColor="@color/text_color"
         android:textAlignment="center"
         />
 
@@ -116,7 +109,6 @@
         android:layout_marginTop="10dp"
         android:text="1.00mm"
         android:id="@+id/hourly_precipitation_amount"
-        android:textColor="@color/text_color"
         android:layout_alignEnd="@id/hourly_precipitation_prob"
         android:textAlignment="center"
         />

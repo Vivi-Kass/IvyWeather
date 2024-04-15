@@ -1,5 +1,6 @@
 package com.example.mad_final;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -11,12 +12,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+
+import java.util.Calendar;
+import java.util.Date;
+
 public class DailyWeatherFragment extends Fragment {
 
     private SwipeRefreshLayout refreshPage;
     private TextView location;
     private ListView listView;
     private CustomDailyWeatherAdapter customDailyWeatherAdapter;
+
+
+
 
     public DailyWeatherFragment() {
         // Required empty public constructor
@@ -36,9 +45,18 @@ public class DailyWeatherFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         View view = inflater.inflate(R.layout.fragment_daily_weather, container, false);
 
         listView = view.findViewById(R.id.daily_weather_view);
+
+        Calendar calendar = Calendar.getInstance();
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        boolean isNight = hourOfDay >= 18 || hourOfDay < 6;
+        int backgroundColor = isNight ? R.drawable.backgroundmain_night : R.drawable.backroundmainpage;
+        int textColor = isNight ? R.color.text_night : R.color.text_day;
+
 
         customDailyWeatherAdapter = new CustomDailyWeatherAdapter(requireContext());
         listView.setAdapter(customDailyWeatherAdapter);
@@ -46,6 +64,9 @@ public class DailyWeatherFragment extends Fragment {
         refreshPage = view.findViewById(R.id.swipe_refresh_layout_daily);
         location = view.findViewById(R.id.daily_location_text);
         location.setText("Daily Weather: " + IvyWeather.getCity());
+
+        view.setBackgroundResource(backgroundColor);
+        location.setTextColor(getResources().getColor(textColor));
 
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -68,7 +89,11 @@ public class DailyWeatherFragment extends Fragment {
             @Override
             public void onWeatherUpdateComplete() {
                 getActivity().runOnUiThread(() -> {
-                    updateUI();
+                    try {
+                        updateUI();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     Toast.makeText(getContext(), "Weather data updated.", Toast.LENGTH_SHORT).show();
                 });
             }
@@ -79,10 +104,16 @@ public class DailyWeatherFragment extends Fragment {
             }
         }, getContext());
     }
-    private void updateUI() {
+    @SuppressLint("ResourceAsColor")
+    private void updateUI() throws JSONException {
         customDailyWeatherAdapter = new CustomDailyWeatherAdapter(requireContext());
         listView.setAdapter(customDailyWeatherAdapter);
         customDailyWeatherAdapter.notifyDataSetChanged();
+
+
+
+
+
     }
 
 
