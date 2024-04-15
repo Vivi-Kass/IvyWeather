@@ -17,6 +17,6 @@
     <color name="checkbox_unchecked_color">#0000EE</color>
     <color name="text_day">#000000</color>
     <color name="text_night">#ADD8E6</color>
-    <color name="divider_color">#ADD8E6</color>
+    <color name="DailyHourly">#d4f7ff</color>
 
 </resources>

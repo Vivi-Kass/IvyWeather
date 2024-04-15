@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/DailyHourly"
     tools:context=".HourlyWeatherListView">
 
 
@@ -63,6 +64,7 @@
         android:layout_marginStart="-20dp"
         android:layout_marginEnd="-20dp"
         android:text="Freezing Rain"
+        android:textStyle="bold"
         android:textAlignment="center"
         android:layout_marginTop="6dp" />
 
@@ -98,6 +100,7 @@
         android:layout_marginTop="25dp"
         android:text="P.O.P: 100%"
         android:id="@+id/hourly_precipitation_prob"
+        android:textStyle="bold"
         android:textAlignment="center"
         />
 
@@ -107,6 +110,7 @@
         android:layout_alignStart="@+id/hourly_precipitation_prob"
         android:layout_below="@+id/hourly_precipitation_prob"
         android:layout_marginTop="10dp"
+        android:textStyle="bold"
         android:text="1.00mm"
         android:id="@+id/hourly_precipitation_amount"
         android:layout_alignEnd="@id/hourly_precipitation_prob"

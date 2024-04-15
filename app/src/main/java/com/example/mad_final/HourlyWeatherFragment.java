@@ -51,11 +51,7 @@ public class HourlyWeatherFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_hourly_weather, container, false);
 
-        Calendar calendar = Calendar.getInstance();
-        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-        boolean isNight = hourOfDay >= 18 || hourOfDay < 6;
-        int backgroundColor = isNight ? R.drawable.backgroundmain_night : R.drawable.backroundmainpage;
-        int textColor = isNight ? R.color.text_night : R.color.text_day;
+
 
         listView = view.findViewById(R.id.hourly_weather_view);
 
@@ -66,10 +62,6 @@ public class HourlyWeatherFragment extends Fragment {
         location = view.findViewById(R.id.hourly_location_text);
         location.setText("Hourly Weather: " + IvyWeather.getCity());
 
-
-        // check why background behind
-        view.setBackgroundResource(backgroundColor);
-        location.setTextColor(getResources().getColor(textColor));
 
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

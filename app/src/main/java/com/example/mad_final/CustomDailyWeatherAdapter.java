@@ -118,7 +118,7 @@ public class CustomDailyWeatherAdapter extends BaseAdapter {
             uv.setText("UV:" + Double.toString(IvyWeather.getWeatherData().getJSONObject("daily").getJSONArray("uv_index_max").getDouble(position)));
             precip.setText(Double.toString(IvyWeather.getWeatherData().getJSONObject("daily").getJSONArray("precipitation_sum").getDouble(position)) + "mm");
 
-            DayNightMode(convertView,  isNight);
+
         }
         catch (Exception e)
         {
@@ -130,20 +130,5 @@ public class CustomDailyWeatherAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private void DayNightMode(View convertView, boolean isNight){
-        int backgroundColor = isNight ? R.drawable.backgroundmain_night : R.drawable.backroundmainpage;
-        int textColor = isNight ? R.color.text_night : R.color.text_day;
-        int trueTextColor = ContextCompat.getColor(convertView.getContext(), textColor);
 
-
-        convertView.setBackgroundResource(backgroundColor);
-        day.setTextColor(trueTextColor);
-        date.setTextColor(trueTextColor);
-        code.setTextColor(trueTextColor);
-        tempHigh.setTextColor(trueTextColor);
-        tempLow.setTextColor(trueTextColor);
-        code.setTextColor(trueTextColor);
-        uv.setTextColor(trueTextColor);
-        precip.setTextColor(trueTextColor);
-    }
 }

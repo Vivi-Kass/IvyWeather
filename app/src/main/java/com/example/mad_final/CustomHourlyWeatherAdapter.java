@@ -153,7 +153,7 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
 
 
 
-            DayNightMode(convertView, isNight);
+
 
 
         }
@@ -169,21 +169,7 @@ public class CustomHourlyWeatherAdapter extends BaseAdapter {
 
 
 
-    private void DayNightMode(View convertView, boolean isNight){
-        int backgroundColor = isNight ? R.drawable.backgroundmain_night : R.drawable.backroundmainpage;
-        int textColor = isNight ? R.color.text_night : R.color.text_day;
-        int trueTextColor = ContextCompat.getColor(convertView.getContext(), textColor);
 
-
-        convertView.setBackgroundResource(backgroundColor);
-        precipitationProb.setTextColor(trueTextColor);
-        feels.setTextColor(trueTextColor);
-        precipitationAmount.setTextColor(trueTextColor);
-        temperatureText.setTextColor(trueTextColor);
-        code.setTextColor(trueTextColor);
-        time.setTextColor(trueTextColor);
-        day.setTextColor(trueTextColor);
-    }
 
 
 }

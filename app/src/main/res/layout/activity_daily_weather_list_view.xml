@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/DailyHourly"
     tools:context=".DailyWeatherListView">
 
     <TextView
@@ -13,6 +14,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
         android:text="Saturday"
+        android:textStyle="bold"
         android:id="@+id/daily_day"
         />
 
@@ -25,6 +27,7 @@
         android:layout_marginTop="10dp"
         android:text="04-11"
         android:id="@+id/daily_date"
+        android:textStyle="bold"
         />
 
 
@@ -51,6 +54,7 @@
         android:text="Freezing Rain"
         android:textAlignment="center"
         android:layout_marginTop="0dp"
+        android:textStyle="bold"
         android:layout_marginBottom="15dp" />
 
 
@@ -62,6 +66,7 @@
         android:text="temp H"
         android:id="@+id/daily_temp_high"
         android:textAlignment="center"
+        android:textStyle="bold"
         />
 
     <TextView
@@ -73,7 +78,8 @@
         android:layout_marginStart="90dp"
         android:layout_marginTop="10dp"
         android:text="Temp L"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textStyle="bold"/>
 
 
 
@@ -85,7 +91,8 @@
         android:layout_alignStart="@+id/daily_precip_amount"
         android:layout_marginTop="25dp"
         android:text="UV:4.7"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -97,6 +104,7 @@
         android:text="0.00mm"
         android:id="@+id/daily_precip_amount"
         android:textAlignment="center"
+        android:textStyle="bold"
         />
 
 
