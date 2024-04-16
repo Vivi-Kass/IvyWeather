@@ -83,7 +83,7 @@ public class WeatherCodeHandler {
     //Gets the appropriate icon based on the weater code, day status, and context
     public static Drawable getIcon(int weatherCode, int dayStatus, Context ctx)
     {
-        Drawable icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_foreground); //this is a way to ensure we catch issues
+        Drawable icon = ctx.getResources().getDrawable(R.drawable.ivy_app_icon_foreground); //this is a way to ensure we catch issues
         if (weatherCode >= 3) //no moon or sun
         {
             if (cloud.contains(weatherCode))
