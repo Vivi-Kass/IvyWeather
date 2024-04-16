@@ -106,25 +106,27 @@ public class MainActivity extends AppCompatActivity {
         PermissionChecker.promptPrecise(this);
         PermissionChecker.promptCoarse(this);
 
-        // before calling the API, check for network connection
-        if (IvyWeather.CheckWifiConnection(this)) {
-            if(PermissionChecker.checkPermissions(this))
-            {
-                getLocationCallAPI();
-            }
-            else
-            {
-                String needLocation = "This app needs the location to be allowed in order to work.\n Please enable it in settings.";
-                textView.setText(needLocation);
+        if(PermissionChecker.checkPermissions(MainActivity.this))
+        {
+            getLocationCallAPI();
+            textView.setText(R.string.loading);
+
+            if (!IvyWeather.CheckWifiConnection(this)) {
+                // wifi isnt connected, check the connection
+                String wifiError = "App current offline \n Please connect to the internet.";
+                textView.setText(wifiError);
                 button.setVisibility(View.VISIBLE);
             }
         }
-        else {
-            // wifi isnt connected, check the connection
-            String wifiError = "App current offline \n Please connect to the internet.";
-            textView.setText(wifiError);
+        else
+        {
+            PermissionChecker.promptPrecise(MainActivity.this);
+            String needLocation = "This app needs the location to be allowed in order to work.\n Please enable it in settings.";
+            textView.setText(needLocation);
+            button.setVisibility(View.VISIBLE);
             button.setVisibility(View.VISIBLE);
         }
+
 
             //On click listener
             button.setOnClickListener(new View.OnClickListener() {
@@ -132,25 +134,24 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    if(IvyWeather.CheckWifiConnection(view.getContext())) {
+                    if(PermissionChecker.checkPermissions(MainActivity.this))
+                    {
+                        getLocationCallAPI();
+                        textView.setText(R.string.loading);
 
-                        if(PermissionChecker.checkPermissions(MainActivity.this))
-                        {
-                            getLocationCallAPI();
-                            textView.setText(R.string.loading);
-                        }
-                        else
-                        {
-                            String retryMessage = "Error in updating app, Please try again";
-                            textView.setText(retryMessage);
+                        if (!IvyWeather.CheckWifiConnection(MainActivity.this)) {
+                            // wifi isnt connected, check the connection
+                            String wifiError = "App current offline \n Please connect to the internet.";
+                            textView.setText(wifiError);
                             button.setVisibility(View.VISIBLE);
-                            Toast.makeText(MainActivity.this, "Location Not Allowed", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    else {
-                        // wifi isnt connected, check the connection
-                        String wifiError = "App current offline \n Please connect to the internet.";
-                        textView.setText(wifiError);
+                    else
+                    {
+                        PermissionChecker.promptPrecise(MainActivity.this);
+                        String needLocation = "This app needs the location to be allowed in order to work.\n Please enable it in settings.";
+                        textView.setText(needLocation);
+                        button.setVisibility(View.VISIBLE);
                         button.setVisibility(View.VISIBLE);
                     }
 
