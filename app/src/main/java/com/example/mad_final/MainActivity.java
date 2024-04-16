@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private final Handler handler = new Handler();
 
 
+
+
     @SuppressLint("ResourceType")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // check if user is connected to wifi
-        if (CheckWifiConnection()) {
+        if (IvyWeather.CheckWifiConnection(this)) {
             int id = item.getItemId();
             if (id == R.id.current_weather && PermissionChecker.checkPermissions(this)) {
                 startCurrentWeatherFragment();
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //Get views
         framelayout = findViewById(R.id.fragment_frame);
         textView = findViewById(R.id.text_info);
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         PermissionChecker.promptCoarse(this);
 
         // before calling the API, check for network connection
-        if (CheckWifiConnection()) {
+        if (IvyWeather.CheckWifiConnection(this)) {
             if(PermissionChecker.checkPermissions(this))
             {
                 getLocationCallAPI();
@@ -113,27 +116,46 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(needLocation);
                 button.setVisibility(View.VISIBLE);
             }
-
-            //On click listener
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(PermissionChecker.checkPermissions(MainActivity.this))
-                    {
-                        getLocationCallAPI();
-                    }
-                    else
-                    {
-                        Toast.makeText(MainActivity.this, "Location Not Allowed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
         }
         else {
 
             // wifi isnt connected, check the connection
-            Toast.makeText(MainActivity.this, "You're not connected to the internet", Toast.LENGTH_SHORT).show();
+            String wifiError = "App current offline \n Please connect to a stable wifi connection.";
+            textView.setText(wifiError);
+            button.setVisibility(View.VISIBLE);
         }
+
+            //On click listener
+            button.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+
+                    if(IvyWeather.CheckWifiConnection(view.getContext())) {
+
+                        if(PermissionChecker.checkPermissions(MainActivity.this))
+                        {
+                            getLocationCallAPI();
+                            textView.setText(R.string.loading);
+                        }
+                        else
+                        {
+                            String retryMessage = "Error in updating app, Please try again";
+                            textView.setText(retryMessage);
+                            button.setVisibility(View.VISIBLE);
+                            Toast.makeText(MainActivity.this, "Location Not Allowed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else {
+                        // wifi isnt connected, check the connection
+                        String wifiError = "App current offline \n Please connect to a stable wifi connection.";
+                        textView.setText(wifiError);
+                        button.setVisibility(View.VISIBLE);
+                    }
+
+                }
+            });
+
 
 
 
@@ -265,49 +287,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Security Exception: " + e.getMessage());
         }
 
-    }
-
-    //  METHOD NAME: private boolean CheckWifiConnection()
-    //  DESCRIPTION: This method aims to find out if user has wifi or cellular data on so JSON methods can be done without errors
-    //  PARAMETERS:  None
-    //  RETURNS:     true if there is connected, false if its offline
-    private boolean CheckWifiConnection(){
-
-        //get the current application context for which wifi service they are using
-        WifiManager currcon = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        // Check if Wi-fi adapter is on
-        if (currcon.isWifiEnabled()) {
-
-            //if its on then check if its connected to any wifi
-            WifiInfo userWifi = currcon.getConnectionInfo();
-
-            //if yes, return true which means its connected else continue to check for cellular
-            if(userWifi.getNetworkId() != -1 ) {
-                return true;
-            }
-        }
-        else {
-            // get the type of cellular service being used
-            ConnectivityManager currcelular = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-            //get the info of that service
-            NetworkInfo userCelular = currcelular.getActiveNetworkInfo();
-
-            //check if its null or if the cellular service is on
-            if (userCelular != null && userCelular.isConnected()) {
-
-                // if yes then get the type of service
-                boolean isMobile = userCelular.getType() == ConnectivityManager.TYPE_MOBILE;
-
-                //if its a mobile then return true
-                if (isMobile) {
-                    return true;
-                }
-            }
-        }
-
-        // if no wifi was connected or cellular service return false
-        return false;
     }
 
 
