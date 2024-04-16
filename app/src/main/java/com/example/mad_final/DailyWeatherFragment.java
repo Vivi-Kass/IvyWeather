@@ -10,6 +10,8 @@
 package com.example.mad_final;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -44,24 +46,35 @@ public class DailyWeatherFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_daily_weather, container, false);
         listView = view.findViewById(R.id.daily_weather_view);
+        Context context = getContext();
+        if (context != null && IvyWeather.CheckWifiConnection(context)) {
+            //Setup the adapter
+            customDailyWeatherAdapter = new CustomDailyWeatherAdapter(requireContext());
+            listView.setAdapter(customDailyWeatherAdapter);
 
-        //Setup the adapter
-        customDailyWeatherAdapter = new CustomDailyWeatherAdapter(requireContext());
-        listView.setAdapter(customDailyWeatherAdapter);
+            //Set location text
+            TextView location = view.findViewById(R.id.daily_location_text);
+            location.setText("Daily Weather: " + IvyWeather.getCity());
 
-        //Set location text
-        TextView location = view.findViewById(R.id.daily_location_text);
-        location.setText("Daily Weather: " + IvyWeather.getCity());
-
-        refreshPage = view.findViewById(R.id.swipe_refresh_layout_daily);
+            refreshPage = view.findViewById(R.id.swipe_refresh_layout_daily);
+        }
         //On refresh
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (PermissionChecker.checkPermissions(requireActivity())) {
-                    updateWeather();
-                } else {
-                    Toast.makeText(getContext(), "Insufficient permissions to update weather data.", Toast.LENGTH_SHORT).show();
+                Context context = getContext();
+                if (context != null && IvyWeather.CheckWifiConnection(context)) {
+                    if (PermissionChecker.checkPermissions(requireActivity())) {
+                        updateWeather();
+                    } else {
+                        Toast.makeText(getContext(), "Insufficient permissions to update weather data.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+
+                    Toast.makeText(getContext(), "Error Connecting to Wifi", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    startActivity(intent);
                 }
                 refreshPage.setRefreshing(false);
             }

@@ -8,17 +8,25 @@
 
 package com.example.mad_final;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.fragment.app.FragmentActivity;
 
 
 public class HourlyWeatherFragment extends Fragment {
@@ -58,10 +66,19 @@ public class HourlyWeatherFragment extends Fragment {
         refreshPage.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (PermissionChecker.checkPermissions(requireActivity())) {
-                    updateWeather();
-                } else {
-                    Toast.makeText(getContext(), "Insufficient permissions to update weather data.", Toast.LENGTH_SHORT).show();
+                Context context = getContext();
+                if (context != null && IvyWeather.CheckWifiConnection(context)) {
+                    if (PermissionChecker.checkPermissions(requireActivity())) {
+                        updateWeather();
+                    } else {
+                        Toast.makeText(getContext(), "Insufficient permissions to update weather data.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+
+                    Toast.makeText(getContext(), "Error Connecting to Wifi", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    startActivity(intent);
                 }
                 refreshPage.setRefreshing(false);
             }

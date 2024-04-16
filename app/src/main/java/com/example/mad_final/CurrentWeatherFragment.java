@@ -9,7 +9,9 @@
 package com.example.mad_final;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -81,9 +83,17 @@ public class CurrentWeatherFragment extends Fragment {
             @Override
             public void onRefresh() {
 
-                if(PermissionChecker.checkPermissions(requireActivity())) {
-                    updateWeather();
-                    Toast.makeText(getContext(), "Page updated", Toast.LENGTH_SHORT).show();
+                if (IvyWeather.CheckWifiConnection(rootView.getContext())) {
+                    if (PermissionChecker.checkPermissions(requireActivity())) {
+                        updateWeather();
+                        Toast.makeText(getContext(), "Page updated", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+
+                    Toast.makeText(getContext(), "Error Connecting to Wifi", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(rootView.getContext(), MainActivity.class);
+                    startActivity(intent);
                 }
                 swipeRefresh.setRefreshing(false);
             }
@@ -93,11 +103,20 @@ public class CurrentWeatherFragment extends Fragment {
         refreshPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(PermissionChecker.checkPermissions(requireActivity())) {
-                    //getLocation();
-                    Toast.makeText(getContext(), "Page updated", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "Error in fetching new info", Toast.LENGTH_SHORT).show();
+
+                if (IvyWeather.CheckWifiConnection(rootView.getContext())) {
+                    if (PermissionChecker.checkPermissions(requireActivity())) {
+                        //getLocation();
+                        Toast.makeText(getContext(), "Page updated", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Error in fetching new info", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else {
+
+                    Toast.makeText(getContext(), "Error Connecting to Wifi", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(rootView.getContext(), MainActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -105,20 +124,29 @@ public class CurrentWeatherFragment extends Fragment {
         toMoreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder latlonnotification = new AlertDialog.Builder(requireActivity());
-                latlonnotification.setTitle("Location Details");
 
-                latlonnotification.setMessage("Latitude: " + IvyWeather.getUserLocation().getLatitude() + "\nLongitude: " + IvyWeather.getUserLocation().getLongitude());
+                if (IvyWeather.CheckWifiConnection(rootView.getContext())) {
+                    AlertDialog.Builder latlonnotification = new AlertDialog.Builder(requireActivity());
+                    latlonnotification.setTitle("Location Details");
 
-                latlonnotification.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
+                    latlonnotification.setMessage("Latitude: " + IvyWeather.getUserLocation().getLatitude() + "\nLongitude: " + IvyWeather.getUserLocation().getLongitude());
+
+                    latlonnotification.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
 
 
-                AlertDialog dialog = latlonnotification.create();
-                dialog.show();
+                    AlertDialog dialog = latlonnotification.create();
+                    dialog.show();
+                }
+                else {
+
+                    Toast.makeText(getContext(), "Error Connecting to Wifi", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(rootView.getContext(), MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
