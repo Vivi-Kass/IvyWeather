@@ -18,5 +18,6 @@
     <color name="text_day">#000000</color>
     <color name="text_night">#ADD8E6</color>
     <color name="DailyHourly">#d4f7ff</color>
+    <color name="backgroundMenu">#BE42E9</color>
 
 </resources>

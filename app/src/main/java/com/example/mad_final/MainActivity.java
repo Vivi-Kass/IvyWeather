@@ -22,6 +22,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -48,16 +52,27 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout framelayout;
     private TextView textView;
     private Button button;
+
+    public Menu menu;
     private final Handler handler = new Handler();
     private FusedLocationProviderClient fusedLocationClient;
     private final String needLocation = "This app needs the location to be allowed in order to work.\n Please enable it in settings.";
 
+    private WifiManager currcon;
+    private  WifiInfo userWifi;
+
+   private  ConnectivityManager currcelular;
+
+   private  NetworkInfo userCelular;
 
 
 
+    @SuppressLint("ResourceType")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        menu = findViewById(R.menu.menu);
+
         return true;
     }
 
@@ -65,44 +80,35 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
-        int id = item.getItemId();
-        if (id == R.id.current_weather && PermissionChecker.checkPermissions(this)) {
-            startCurrentWeatherFragment();
-            return true;
-        } else if (id == R.id.hourly_weather && PermissionChecker.checkPermissions(this)) {
-            startHourlyWeatherFragment();
-            return true;
-        } else if (id == R.id.daily_weather && PermissionChecker.checkPermissions(this)) {
-            startDailyWeatherFragment();
-            return true;
-        } else if (id == R.id.credits) {
-            startCreditsFragment();
-            return true;
-        }
-        else if (id == R.id.show_notifications){
 
-            boolean isChecked = !item.isChecked();
-            item.setChecked(isChecked);
-
-            PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit()
-                    .putBoolean("show_notifications", isChecked)
-                    .apply();
-
-            if (isChecked) {
-                scheduleWeatherUpdates();
-            } else {
-                cancelWeatherUpdates();
+        if (CheckWifiConnection()) {
+            int id = item.getItemId();
+            if (id == R.id.current_weather && PermissionChecker.checkPermissions(this)) {
+                startCurrentWeatherFragment();
+                return true;
+            } else if (id == R.id.hourly_weather && PermissionChecker.checkPermissions(this)) {
+                startHourlyWeatherFragment();
+                return true;
+            } else if (id == R.id.daily_weather && PermissionChecker.checkPermissions(this)) {
+                startDailyWeatherFragment();
+                return true;
+            } else if (id == R.id.credits) {
+                startCreditsFragment();
+                return true;
             }
-            return true;
+            else
+            {
+                //otherwise can't change screen
+                Toast.makeText(MainActivity.this, "Location Not Allowed", Toast.LENGTH_SHORT).show();
+            }
+            return super.onOptionsItemSelected(item);
+        }
+        else {
 
+            Toast.makeText(MainActivity.this, "You're not connected to the internet", Toast.LENGTH_SHORT).show();
         }
-        else
-        {
-            //otherwise can't change screen
-            Toast.makeText(MainActivity.this, "Location Not Allowed", Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
+
+        return true;
     }
 
     @Override
@@ -119,77 +125,40 @@ public class MainActivity extends AppCompatActivity {
         //Check permissions and prompt is necessary
         PermissionChecker.promptPrecise(this);
         PermissionChecker.promptCoarse(this);
+        if (CheckWifiConnection()) {
+            if(PermissionChecker.checkPermissions(this))
+            {
+                getLocationCallAPI();
+            }
+            else
+            {
+                textView.setText(needLocation);
+                button.setVisibility(View.VISIBLE);
+            }
 
-        if(PermissionChecker.checkPermissions(this))
-        {
-            getLocationCallAPI();
-        }
-        else
-        {
-            textView.setText(needLocation);
-            button.setVisibility(View.VISIBLE);
-        }
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(PermissionChecker.checkPermissions(MainActivity.this))
-                {
-                    getLocationCallAPI();
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(PermissionChecker.checkPermissions(MainActivity.this))
+                    {
+                        getLocationCallAPI();
+                    }
+                    else
+                    {
+                        Toast.makeText(MainActivity.this, "Location Not Allowed", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else
-                {
-                    Toast.makeText(MainActivity.this, "Location Not Allowed", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+            });
+        }
+        else {
+            Toast.makeText(MainActivity.this, "You're not connected to the internet", Toast.LENGTH_SHORT).show();
+        }
+
 
 
     }
 
 
-    private void scheduleWeatherUpdates() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, WeatherAlert.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-
-        // Trigger an immediate weather update
-        IvyWeather ivyWeather = (IvyWeather) getApplication();
-        IvyWeather.getInstance().updateWeather(new IvyWeather.WeatherUpdateListener() {
-            @Override
-            public void onWeatherUpdateComplete() {
-                // Weather update is complete, now we can schedule the repeating updates
-                long interval = 3600000; // 1 hour interval
-                long startTime = System.currentTimeMillis(); // Immediate start
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, startTime, interval, pendingIntent);
-                Toast.makeText(IvyWeather.getInstance(), "Weather update scheduled", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onWeatherUpdateFailed(Exception e) {
-                Toast.makeText(IvyWeather.getInstance(), "Failed to schedule weather update: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }, this);
-    }
-
-    private void cancelWeatherUpdates() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, WeatherAlert.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-        alarmManager.cancel(pendingIntent);
-        Toast.makeText(this, "Notifications canceled", Toast.LENGTH_SHORT).show();
-    }
 
     private void startCurrentWeatherFragment()
     {
@@ -301,6 +270,29 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Security Exception: " + e.getMessage());
         }
 
+    }
+
+
+    private boolean CheckWifiConnection(){
+        currcon = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+        if (currcon.isWifiEnabled()) { // means Wi-Fi adapter is ON
+            userWifi = currcon.getConnectionInfo();
+            if(userWifi.getNetworkId() != -1 ) {
+                return true;   // no network connection
+            }
+        }
+        else {
+            currcelular = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            userCelular = currcelular.getActiveNetworkInfo();
+            if (userCelular != null && userCelular.isConnected()) {
+                boolean isMobile = userCelular.getType() == ConnectivityManager.TYPE_MOBILE;
+                if (isMobile) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 
