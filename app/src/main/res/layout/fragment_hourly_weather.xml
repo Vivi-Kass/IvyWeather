@@ -3,13 +3,15 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    android:background="@color/DailyHourly"
+        android:background="@color/DailyHourly"
+        android:screenOrientation="portrait"
         tools:context=".HourlyWeatherFragment"
-        >
+            >
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout_hourly"
         android:layout_width="match_parent"
+        android:screenOrientation="portrait"
         android:layout_height="100dp">
         <RelativeLayout
             android:layout_width="match_parent"
