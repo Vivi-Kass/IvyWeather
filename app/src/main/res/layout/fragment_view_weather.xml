@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/weather_code"
             android:layout_marginStart="80dp"
-            android:text="High: 50"
+            android:text="High: --"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginTop="20dp"
             android:textSize="24sp"/>
@@ -116,7 +116,7 @@
             android:layout_below="@id/weather_code"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="80dp"
-            android:text="Low: 20"
+            android:text="Low: --"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginTop="20dp"
             android:textSize="24sp"/>
@@ -138,7 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/temp_low"
             android:layout_centerHorizontal="true"
-            android:text="0.00mm"
+            android:text="-.--mm"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_marginTop="20dp"
             android:textSize="24sp"/>

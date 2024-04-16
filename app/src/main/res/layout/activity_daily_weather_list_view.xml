@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="25dp"
-        android:text="Saturday"
+        android:text="Day"
         android:textStyle="bold"
         android:id="@+id/daily_day"
         />
@@ -25,7 +25,7 @@
         android:layout_marginStart="15dp"
         android:layout_below="@+id/daily_day"
         android:layout_marginTop="10dp"
-        android:text="04-11"
+        android:text="00-00"
         android:id="@+id/daily_date"
         android:textStyle="bold"
         />
@@ -38,7 +38,7 @@
         android:layout_alignStart="@id/daily_date"
         android:layout_marginStart="90dp"
         android:layout_marginTop="4dp"
-        android:src="@drawable/clouds"
+        android:src="@drawable/sun"
 
         />
 
@@ -51,7 +51,7 @@
         android:layout_alignEnd="@id/weather_icon_daily"
         android:layout_marginStart="-20dp"
         android:layout_marginEnd="-20dp"
-        android:text="Freezing Rain"
+        android:text="---------"
         android:textAlignment="center"
         android:layout_marginTop="0dp"
         android:textStyle="bold"
@@ -90,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/daily_precip_amount"
         android:layout_marginTop="25dp"
-        android:text="UV:4.7"
+        android:text="UV:-.-"
         android:textAlignment="center"
         android:textStyle="bold"/>
 
@@ -101,7 +101,7 @@
         android:layout_alignStart="@+id/daily_temp_low"
         android:layout_marginStart="90dp"
         android:layout_marginTop="10dp"
-        android:text="0.00mm"
+        android:text="-.--mm"
         android:id="@+id/daily_precip_amount"
         android:textAlignment="center"
         android:textStyle="bold"
