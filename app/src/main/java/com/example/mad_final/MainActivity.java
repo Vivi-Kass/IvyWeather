@@ -82,8 +82,10 @@ public class MainActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
         else {
-            // user isnt connected, so do not allow him to move to any other pages
-            Toast.makeText(MainActivity.this, "You're not connected to the internet", Toast.LENGTH_SHORT).show();
+            // wifi isnt connected, check the connection
+            String wifiError = "App current offline \n Please connect to the internet.";
+            textView.setText(wifiError);
+            button.setVisibility(View.VISIBLE);
         }
 
         return true;
@@ -118,9 +120,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else {
-
             // wifi isnt connected, check the connection
-            String wifiError = "App current offline \n Please connect to a stable wifi connection.";
+            String wifiError = "App current offline \n Please connect to the internet.";
             textView.setText(wifiError);
             button.setVisibility(View.VISIBLE);
         }
