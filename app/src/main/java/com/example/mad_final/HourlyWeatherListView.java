@@ -1,5 +1,5 @@
 /*
- * FILE :            CustomDailyWeatherAdapter.java
+ * FILE :            HourlyWeatherListView.java
  * PROJECT :         PROG3150 - Project
  * PROGRAMMER :      Vivian Morton, Isaac Ribeiro Leao
  * FIRST VERSION :   2024 - 04 - 06

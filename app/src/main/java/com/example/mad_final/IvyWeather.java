@@ -97,18 +97,32 @@ public class IvyWeather extends Application {
 
         FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
         try {
+
+            // using the variable created attempt to get the last known location
             fusedLocationClient.getLastLocation()
+
+                    // in case of a success
                     .addOnSuccessListener(new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
+
+                            //check if its null
                             if (location != null) {
+
+                                // set the user's current location
                                 setUserLocation(location);
+
+                                //now with the location set call for the API handler
                                 APIHandler apiHandler = new APIHandler(new Handler(), context, getUserLocation(), new APIHandler.WeatherDataListener() {
                                     @Override
                                     public void onDataFetched(JSONObject jsonData) {
+
+                                        // using the data fetched from the API, set the weather and city
                                         setWeatherData(jsonData);
                                         setCity(getUserLocation(), context);
                                         try {
+
+                                            // notify listener that the update is finished
                                             listener.onWeatherUpdateComplete();
                                         } catch (JSONException e) {
                                             throw new RuntimeException(e);
@@ -116,11 +130,13 @@ public class IvyWeather extends Application {
                                     }
                                 });
                             } else {
-
+                                // if the listener was null throw error
                                 listener.onWeatherUpdateFailed(new Exception("Failed to obtain location."));
                             }
                         }
                     })
+
+                    // in case of a error on the listener simply throw an error
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
