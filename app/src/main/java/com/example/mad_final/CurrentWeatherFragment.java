@@ -11,14 +11,11 @@ package com.example.mad_final;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,19 +24,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-
 public class CurrentWeatherFragment extends Fragment {
-
     private SwipeRefreshLayout swipeRefresh;
     private TextView userLatitude;
     private TextView userLongitude;
-    private Button toMoreDetails;
-    private Button refreshPage;
     private TextView userLocTV;
     private TextView currTemperature;
     private TextView feelsTemp;
@@ -49,20 +41,11 @@ public class CurrentWeatherFragment extends Fragment {
     private TextView tempLow;
     private TextView humidity;
     private TextView precipAmount;
-
     private View rootView;
-    private Handler handler = new Handler();
-
-    Location userLocation;
-
-
+    private final Handler handler = new Handler();
 
     public CurrentWeatherFragment() {
         // Required empty public constructor
-    }
-
-    public static CurrentWeatherFragment newInstance() {
-        return new CurrentWeatherFragment();
     }
 
     @Override
@@ -74,15 +57,14 @@ public class CurrentWeatherFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         rootView = inflater.inflate(R.layout.fragment_view_weather, container, false);
 
         // Initialize TextViews and buttons here so they are ready for updates
         userLatitude = rootView.findViewById(R.id.lat_loc);
         userLongitude = rootView.findViewById(R.id.lon_loc);
         userLocTV = rootView.findViewById(R.id.current_location);
-        refreshPage = rootView.findViewById(R.id.refresh_info);
-        toMoreDetails = rootView.findViewById(R.id.more_details);
+        Button refreshPage = rootView.findViewById(R.id.refresh_info);
+        Button toMoreDetails = rootView.findViewById(R.id.more_details);
         swipeRefresh = rootView.findViewById(R.id.swipe_refresh_layout);
         currTemperature = rootView.findViewById(R.id.current_temp);
         feelsTemp = rootView.findViewById(R.id.feels_temp);
@@ -93,6 +75,8 @@ public class CurrentWeatherFragment extends Fragment {
         tempHigh = rootView.findViewById(R.id.temp_high);
         tempLow = rootView.findViewById(R.id.temp_low);
 
+
+        //Refresh listener
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -105,7 +89,7 @@ public class CurrentWeatherFragment extends Fragment {
             }
         });
 
-
+        //On clicks
         refreshPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +127,8 @@ public class CurrentWeatherFragment extends Fragment {
         return rootView;
     }
 
+
+    //Update the UI
     private void updateUI()
     {
         try {

@@ -10,28 +10,27 @@ package com.example.mad_final;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 public class WeatherCodeHandler {
 
-    private static int isday = 1;
-    private static List<Integer> sun = new ArrayList<>(Arrays.asList(0, 1));
-    private static List<Integer> sunCloud = new ArrayList<>(Arrays.asList(2));
-    private static List<Integer> moon = new ArrayList<>(Arrays.asList(0, 1));
-    private static List<Integer> moonCloud = new ArrayList<>(Arrays.asList(2));
-    private static List<Integer> cloud = new ArrayList<>(Arrays.asList(3, 45, 48));
-    private static List<Integer> rain = new ArrayList<>(Arrays.asList(51, 53, 55, 61, 63, 65, 80, 81, 82));
-    private static List<Integer> freezingRain = new ArrayList<>(Arrays.asList(56, 57, 66, 67));
-    private static List<Integer> snow = new ArrayList<>(Arrays.asList(71, 73, 75, 77, 85, 86));
-    private static List<Integer> thunder = new ArrayList<>(Arrays.asList(95));
+    private static final int isday = 1;
+    private static final List<Integer> sun = new ArrayList<>(Arrays.asList(0, 1));
+    private static final List<Integer> sunCloud = new ArrayList<>(Arrays.asList(2));
+    private static final List<Integer> moon = new ArrayList<>(Arrays.asList(0, 1));
+    private static final List<Integer> moonCloud = new ArrayList<>(Arrays.asList(2));
+    private static final List<Integer> cloud = new ArrayList<>(Arrays.asList(3, 45, 48));
+    private static final List<Integer> rain = new ArrayList<>(Arrays.asList(51, 53, 55, 61, 63, 65, 80, 81, 82));
+    private static final List<Integer> freezingRain = new ArrayList<>(Arrays.asList(56, 57, 66, 67));
+    private static final List<Integer> snow = new ArrayList<>(Arrays.asList(71, 73, 75, 77, 85, 86));
+    private static final List<Integer> thunder = new ArrayList<>(Arrays.asList(95));
 
-    private static Map<Integer, String> weatherCodes = new HashMap<Integer, String>() {{
+    //Populate map
+    private static final Map<Integer, String> weatherCodes = new HashMap<Integer, String>() {{
         //Sky
         put(0, "Clear Sky");
         put(1, "Mainly Clear");
@@ -81,32 +80,7 @@ public class WeatherCodeHandler {
     }
 
 
-    public static int getIconInt(int weatherCode, int dayStatus, Context ctx) {
-        // Default icon in case no conditions match
-        int iconResId = R.drawable.ic_launcher_foreground; // Default icon, replace with an actual default icon
-
-        // Determine the icon based on weather code
-        if (sun.contains(weatherCode) && dayStatus == isday) {
-            iconResId = R.drawable.sun;
-        } else if (sunCloud.contains(weatherCode) && dayStatus == isday) {
-            iconResId = R.drawable.sun_cloud;
-        } else if (moon.contains(weatherCode) && dayStatus != isday) {
-            iconResId = R.drawable.moon;
-        } else if (moonCloud.contains(weatherCode) && dayStatus != isday) {
-            iconResId = R.drawable.moon_cloud;
-        } else if (cloud.contains(weatherCode)) {
-            iconResId = R.drawable.clouds;
-        } else if (rain.contains(weatherCode)) {
-            iconResId = R.drawable.rain;
-        } else if (snow.contains(weatherCode)) {
-            iconResId = R.drawable.snow;
-        } else if (thunder.contains(weatherCode)) {
-            iconResId = R.drawable.thunder;
-        }
-
-        return iconResId;
-    }
-
+    //Gets the appropriate icon based on the weater code, day status, and context
     public static Drawable getIcon(int weatherCode, int dayStatus, Context ctx)
     {
         Drawable icon = ctx.getResources().getDrawable(R.drawable.ic_launcher_foreground); //this is a way to ensure we catch issues
@@ -162,8 +136,5 @@ public class WeatherCodeHandler {
 
         return icon;
     }
-
-
-
 
 }

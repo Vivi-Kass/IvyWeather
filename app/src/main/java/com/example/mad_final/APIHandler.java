@@ -13,7 +13,6 @@ import android.content.Context;
 import android.location.Location;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.Toast;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -27,77 +26,43 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class APIHandler {
-    private WeatherDataListener listener;
-    private String apiStart = "https://api.open-meteo.com/v1/forecast?";
-
-    //latitude=52.52&longitude=13.41 (API Middle example)
-    //API end is what to grab
-    private String apiEnd = "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum&timezone=auto";
-
-    private StringBuilder apiFull = new StringBuilder();
-
-    private Handler handler;
-    private Context context;
+    private final WeatherDataListener listener;
+    private final StringBuilder apiFull = new StringBuilder();
+    private final Handler handler;
+    private final Context context;
     private JSONObject jsondata;
-    private Location location;
+    private final Location location;
 
+    //Constructor
     public APIHandler(Handler newHandler, Context newContext, Location newLocation, WeatherDataListener listener) {
         handler = newHandler;
         context = newContext;
         location = newLocation;
 
         //Generate the url for the api call
+        String apiStart = "https://api.open-meteo.com/v1/forecast?";
         apiFull.append(apiStart); //add start
-        apiFull.append("latitude=" + location.getLatitude() + "&");
-        apiFull.append("longitude=" + location.getLongitude());
+        apiFull.append("latitude=").append(location.getLatitude()).append("&");
+        apiFull.append("longitude=").append(location.getLongitude());
+        //latitude=52.52&longitude=13.41 (API Middle example)
+        //API end is what to grab
+        String apiEnd = "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code&hourly=temperature_2m,apparent_temperature,precipitation_probability,precipitation,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum&timezone=auto";
         apiFull.append(apiEnd);
 
+        //Start data handler thread
         this.listener = listener;
         DataHandler dataHandler = new DataHandler();
         Thread downloaderThread = new Thread(dataHandler);
         downloaderThread.start();
     }
 
+    //OnData fetched for JSON Object
     public interface WeatherDataListener {
         void onDataFetched(JSONObject jsonData);
     }
 
 
-    public Location getLocation()
-    {
-        return location;
-    }
-
-    public JSONObject getData()
-    {
-        if (jsondata != null)
-        {
-            return  jsondata;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public class UpdateUI implements Runnable
-    {
-        @Override
-        public void run()
-        {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    //put code to update ui with data here!
-
-
-                }
-            });
-        }
-    }
-
-
-
+    //DataHandler runnable
     public class DataHandler implements Runnable {
         @Override
         public void run() {
@@ -115,26 +80,23 @@ public class APIHandler {
 
             if (jsondata != null) //only display if an error occured
             {
+                //Data fetched
                 if (listener != null) {
                     listener.onDataFetched(jsondata);
                 }
-                //UpdateUI updateUI  = new UpdateUI();
-                //Thread updateUIThread = new Thread(updateUI);
-                //updateUIThread.start();
             }
-
-
         }
-
     }
 
+    //Callable data fetcher
     public class DataFetcher implements Callable{
         @Override
         public Object call() {
 
-            StringBuffer data = new StringBuffer();
+            StringBuilder data = new StringBuilder();
             JSONObject jsonObject = null;
 
+            //API call and storage
             try {
                 URL url = new URL(apiFull.toString());
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

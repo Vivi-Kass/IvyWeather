@@ -1,64 +1,51 @@
+/*
+ * FILE :            CustomDailyWeatherAdapter.java
+ * PROJECT :         PROG3150 - Project
+ * PROGRAMMER :      Vivian Morton, Isaac Ribeiro Leao
+ * FIRST VERSION :   2024 - 04 - 11
+ * DESCRIPTION :     Adapter for the daily weather
+ */
+
 package com.example.mad_final;
 
+import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.Calendar;
 import java.util.Locale;
 
 public class CustomDailyWeatherAdapter extends BaseAdapter {
 
-    private final int daysInWeek = 7;
-
-    private final int dateloc = 0;
-    private final int isday = 1;
-    private Context context;
-    private LayoutInflater inflater;
-    private final int timeloc = 1;
-
-    private TextView day;
-    private TextView date;
-
-    private TextView code;
-
-    private TextView tempHigh;
-
-    private TextView tempLow;
-
-    private TextView uv;
-
-    private TextView precip;
+    private final LayoutInflater inflater;
 
     public CustomDailyWeatherAdapter(Context ctx)
     {
-        context = ctx;
         inflater = LayoutInflater.from(ctx);
     }
 
-
+    //7 days in a week
     @Override
     public int getCount() {
+        int daysInWeek = 7;
         return daysInWeek;
     }
 
+    //Not used, but required in code
     @Override
     public Object getItem(int i) {
         return null;
     }
 
+    //Not used, but required in code
     @Override
     public long getItemId(int i) {
         return 0;
@@ -71,14 +58,14 @@ public class CustomDailyWeatherAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.activity_daily_weather_list_view, parent, false);
         }
 
-        day = convertView.findViewById(R.id.daily_day);
-        date = convertView.findViewById(R.id.daily_date);
+        TextView day = convertView.findViewById(R.id.daily_day);
+        TextView date = convertView.findViewById(R.id.daily_date);
         ImageView icon = convertView.findViewById(R.id.weather_icon_daily);
-        code = convertView.findViewById(R.id.daily_code);
-        tempHigh = convertView.findViewById(R.id.daily_temp_high);
-        tempLow = convertView.findViewById(R.id.daily_temp_low);
-        uv = convertView.findViewById(R.id.daily_uv_index);
-        precip = convertView.findViewById(R.id.daily_precip_amount);
+        TextView code = convertView.findViewById(R.id.daily_code);
+        TextView tempHigh = convertView.findViewById(R.id.daily_temp_high);
+        TextView tempLow = convertView.findViewById(R.id.daily_temp_low);
+        TextView uv = convertView.findViewById(R.id.daily_uv_index);
+        TextView precip = convertView.findViewById(R.id.daily_precip_amount);
 
 
         try
@@ -87,11 +74,9 @@ public class CustomDailyWeatherAdapter extends BaseAdapter {
             String fullDate = IvyWeather.getWeatherData().getJSONObject("daily").getJSONArray("time").getString(position);
             String dayTimeString[] = fullDate.split("T");
             //remove first 5 chars
+            int dateloc = 0;
             String dateShort = dayTimeString[dateloc].substring(5, dayTimeString[dateloc].length());
 
-            Calendar calendar = Calendar.getInstance();
-            int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-            boolean isNight = hourOfDay >= 18 || hourOfDay < 6;
             date.setText(dateShort);
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -111,6 +96,7 @@ public class CustomDailyWeatherAdapter extends BaseAdapter {
             tempLow.setText("L:" + String.format(Locale.getDefault(), " %.1f°C", tempLowInt));
 
             //set the icon and text
+            int isday = 1;
             icon.setImageDrawable(WeatherCodeHandler.getIcon(weatherCode, isday,convertView.getContext()));
             code.setText(WeatherCodeHandler.weatherStatus(weatherCode));
 
@@ -122,10 +108,8 @@ public class CustomDailyWeatherAdapter extends BaseAdapter {
         }
         catch (Exception e)
         {
-
+            Log.d(TAG, "Failed to get daily weather");
         }
-
-
 
         return convertView;
     }

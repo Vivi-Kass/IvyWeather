@@ -1,20 +1,16 @@
+/*
+ * FILE :            CustomDailyWeatherAdapter.java
+ * PROJECT :         PROG3150 - Project
+ * PROGRAMMER :      Vivian Morton, Isaac Ribeiro Leao
+ * FIRST VERSION :   2024 - 04 - 06
+ * DESCRIPTION :     Required onCreate for hourly weather list view
+ */
+
 package com.example.mad_final;
 
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
-import androidx.core.view.WindowCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.example.mad_final.databinding.ActivityHourlyWeatherListViewBinding;
 
 public class HourlyWeatherListView extends AppCompatActivity {
     @Override

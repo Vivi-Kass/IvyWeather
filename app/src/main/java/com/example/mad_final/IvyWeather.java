@@ -10,36 +10,28 @@
 package com.example.mad_final;
 
 import android.app.Application;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Handler;
-
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 public class IvyWeather extends Application {
 
-    private static IvyWeather singleton;
-
     private static String city;
     private static Location userLocation;
     private static JSONObject weatherData;
+
 
     public static String getCity() {
         return city;
@@ -65,17 +57,12 @@ public class IvyWeather extends Application {
         IvyWeather.weatherData = weatherData;
     }
 
-    public static IvyWeather getInstance(){
-        return singleton;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
-        singleton = this;
     }
 
-
+    //Gets the city location
     private static String getCurrentLocationName(Location location, Context context) {
 
         //Using geocoder and storing addresses in a list
