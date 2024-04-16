@@ -8,9 +8,6 @@
 
 package com.example.mad_final;
 
-import static android.content.ContentValues.TAG;
-
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -23,7 +20,6 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +27,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-
-import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -195,7 +184,7 @@ public class CurrentWeatherFragment extends Fragment {
 
 
     private void DayNightMode(boolean isNight){
-        int backgroundColor = isNight ? R.drawable.backgroundmain_night : R.drawable.backroundmainpage;
+        int backgroundColor = isNight ? R.drawable.backgroundmain_night : R.drawable.backgroundmainpage;
         int textColor = isNight ? R.color.text_night : R.color.text_day;
         int trueTextColor = ContextCompat.getColor(rootView.getContext(), textColor);
 
