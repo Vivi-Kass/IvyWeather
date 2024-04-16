@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
 
+
+        // check if user is connected to wifi
         if (CheckWifiConnection()) {
             int id = item.getItemId();
             if (id == R.id.current_weather && PermissionChecker.checkPermissions(this)) {
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
         else {
-
+            // user isnt connected, so do not allow him to move to any other pages
             Toast.makeText(MainActivity.this, "You're not connected to the internet", Toast.LENGTH_SHORT).show();
         }
 
@@ -125,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
         //Check permissions and prompt is necessary
         PermissionChecker.promptPrecise(this);
         PermissionChecker.promptCoarse(this);
+
+        // before calling the API, check for network connection
         if (CheckWifiConnection()) {
             if(PermissionChecker.checkPermissions(this))
             {
@@ -151,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         else {
+
+            // wifi isnt connected, check the connection
             Toast.makeText(MainActivity.this, "You're not connected to the internet", Toast.LENGTH_SHORT).show();
         }
 
@@ -272,26 +278,46 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    //  METHOD NAME: private boolean CheckWifiConnection()
+    //  DESCRIPTION: This method aims to find out if user has wifi or cellular data on so JSON methods can be done without errors
+    //  PARAMETERS:  None
+    //  RETURNS:     true if there is connected, false if its offline
     private boolean CheckWifiConnection(){
-        currcon = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
-        if (currcon.isWifiEnabled()) { // means Wi-Fi adapter is ON
+        //get the current application context for which wifi service they are using
+        currcon = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        // Check if Wi-fi adapter is on
+        if (currcon.isWifiEnabled()) {
+
+            //if its on then check if its connected to any wifi
             userWifi = currcon.getConnectionInfo();
+
+            //if yes, return true which means its connected else continue to check for cellular
             if(userWifi.getNetworkId() != -1 ) {
-                return true;   // no network connection
+                return true;
             }
         }
         else {
+            // get the type of cellular service being used
             currcelular = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+            //get the info of that service
             userCelular = currcelular.getActiveNetworkInfo();
+
+            //check if its null or if the cellular service is on
             if (userCelular != null && userCelular.isConnected()) {
+
+                // if yes then get the type of service
                 boolean isMobile = userCelular.getType() == ConnectivityManager.TYPE_MOBILE;
+
+                //if its a mobile then return true
                 if (isMobile) {
                     return true;
                 }
             }
         }
+
+        // if no wifi was connected or cellular service return false
         return false;
     }
 

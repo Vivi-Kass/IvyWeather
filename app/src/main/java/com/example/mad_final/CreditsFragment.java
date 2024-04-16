@@ -119,7 +119,7 @@ public class CreditsFragment extends Fragment {
         // Return rootView
         return rootView;
     }
-//  METHOD NAME:   public void openLink(View view, String link):
+//  METHOD NAME:   public void openLink(View view, String link)
 //  DESCRIPTION: This method grabs the string link and starts a new activity by sending the user to the URL
 //  PARAMETERS:  View view, String link
 //  RETURNS:     Nothing

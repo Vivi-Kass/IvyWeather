@@ -175,6 +175,8 @@ public class CurrentWeatherFragment extends Fragment {
             int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
             boolean isNight = hourOfDay >= 18 || hourOfDay < 6;
 
+
+            //call DayNightMode to change UI based on current time
             DayNightMode(isNight);
 
         } catch (Exception e) {
@@ -182,14 +184,21 @@ public class CurrentWeatherFragment extends Fragment {
         }
     }
 
-
+    //  METHOD NAME: private void DayNightMode(boolean isNight)
+    //  DESCRIPTION: This method checks the boolean parameter, then based on it change the UI to match a Day/Night mode
+    //  PARAMETERS:  boolean isNight
+    //  RETURNS:     none
     private void DayNightMode(boolean isNight){
+
+        //set variables for background and text color
         int backgroundColor = isNight ? R.drawable.backgroundmain_night : R.drawable.backgroundmainpage;
         int textColor = isNight ? R.color.text_night : R.color.text_day;
         int trueTextColor = ContextCompat.getColor(rootView.getContext(), textColor);
 
-
+        // change background
         rootView.setBackgroundResource(backgroundColor);
+
+        // change text
         userLocTV.setTextColor(trueTextColor);
         currTemperature.setTextColor(trueTextColor);
         feelsTemp.setTextColor(trueTextColor);
