@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else {
                         // wifi isnt connected, check the connection
-                        String wifiError = "App current offline \n Please connect to a stable wifi connection.";
+                        String wifiError = "App current offline \n Please connect to the internet.";
                         textView.setText(wifiError);
                         button.setVisibility(View.VISIBLE);
                     }
