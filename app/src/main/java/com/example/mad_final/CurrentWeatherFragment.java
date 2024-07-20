@@ -8,11 +8,14 @@
 
 package com.example.mad_final;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -45,6 +48,8 @@ public class CurrentWeatherFragment extends Fragment {
     private TextView precipAmount;
     private View rootView;
     private final Handler handler = new Handler();
+    private Context ctx;
+    private ConnectivityManager connectivityManager;
 
     public CurrentWeatherFragment() {
         // Required empty public constructor
@@ -77,7 +82,8 @@ public class CurrentWeatherFragment extends Fragment {
         tempHigh = rootView.findViewById(R.id.temp_high);
         tempLow = rootView.findViewById(R.id.temp_low);
 
-
+        ctx = inflater.getContext();
+        connectivityManager = ((ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE));
         //Refresh listener
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -91,7 +97,7 @@ public class CurrentWeatherFragment extends Fragment {
                 }
                 else {
 
-                    Toast.makeText(getContext(), "Error Connecting to Wifi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error Connecting to internet", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(rootView.getContext(), MainActivity.class);
                     startActivity(intent);
                 }
@@ -104,7 +110,7 @@ public class CurrentWeatherFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (IvyWeather.CheckWifiConnection(rootView.getContext())) {
+                if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected()) {
                     if (PermissionChecker.checkPermissions(requireActivity())) {
                         //getLocation();
                         Toast.makeText(getContext(), "Page updated", Toast.LENGTH_SHORT).show();
@@ -114,7 +120,7 @@ public class CurrentWeatherFragment extends Fragment {
                 }
                 else {
 
-                    Toast.makeText(getContext(), "Error Connecting to Wifi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error Connecting to internet", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(rootView.getContext(), MainActivity.class);
                     startActivity(intent);
                 }
@@ -125,7 +131,7 @@ public class CurrentWeatherFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (IvyWeather.CheckWifiConnection(rootView.getContext())) {
+                if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected()) {
                     AlertDialog.Builder latlonnotification = new AlertDialog.Builder(requireActivity());
                     latlonnotification.setTitle("Location Details");
 
@@ -143,7 +149,7 @@ public class CurrentWeatherFragment extends Fragment {
                 }
                 else {
 
-                    Toast.makeText(getContext(), "Error Connecting to Wifi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error Connecting to internet", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(rootView.getContext(), MainActivity.class);
                     startActivity(intent);
                 }

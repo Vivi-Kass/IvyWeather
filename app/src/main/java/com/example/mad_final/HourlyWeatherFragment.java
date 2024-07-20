@@ -13,6 +13,7 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,6 +35,8 @@ public class HourlyWeatherFragment extends Fragment {
     private SwipeRefreshLayout refreshPage;
     private ListView listView;
     private CustomHourlyWeatherAdapter customHourlyWeatherAdapter;
+    private Context ctx;
+    private ConnectivityManager connectivityManager;
 
     public HourlyWeatherFragment() {
         // Required empty public constructor
@@ -51,6 +54,9 @@ public class HourlyWeatherFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_hourly_weather, container, false);
 
+        ctx = inflater.getContext();
+        connectivityManager = ((ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE));
+
         listView = view.findViewById(R.id.hourly_weather_view);
 
         //setup adapter
@@ -67,7 +73,7 @@ public class HourlyWeatherFragment extends Fragment {
             @Override
             public void onRefresh() {
                 Context context = getContext();
-                if (context != null && IvyWeather.CheckWifiConnection(context)) {
+                if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected()) {
                     if (PermissionChecker.checkPermissions(requireActivity())) {
                         updateWeather();
                     } else {
@@ -76,7 +82,7 @@ public class HourlyWeatherFragment extends Fragment {
                 }
                 else {
 
-                    Toast.makeText(getContext(), "Error Connecting to Wifi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error Connecting to internet", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, MainActivity.class);
                     startActivity(intent);
                 }

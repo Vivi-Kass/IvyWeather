@@ -12,6 +12,7 @@ package com.example.mad_final;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,6 +31,8 @@ public class DailyWeatherFragment extends Fragment {
     private SwipeRefreshLayout refreshPage;
     private ListView listView;
     private CustomDailyWeatherAdapter customDailyWeatherAdapter;
+    private Context ctx;
+    private ConnectivityManager connectivityManager;
 
     public DailyWeatherFragment() {
         // Required empty public constructor
@@ -47,6 +50,8 @@ public class DailyWeatherFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_daily_weather, container, false);
         listView = view.findViewById(R.id.daily_weather_view);
         Context context = getContext();
+        ctx = inflater.getContext();
+        connectivityManager = ((ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE));
         if (context != null && IvyWeather.CheckWifiConnection(context)) {
             //Setup the adapter
             customDailyWeatherAdapter = new CustomDailyWeatherAdapter(requireContext());
@@ -63,7 +68,7 @@ public class DailyWeatherFragment extends Fragment {
             @Override
             public void onRefresh() {
                 Context context = getContext();
-                if (context != null && IvyWeather.CheckWifiConnection(context)) {
+                if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected()) {
                     if (PermissionChecker.checkPermissions(requireActivity())) {
                         updateWeather();
                     } else {
@@ -72,7 +77,7 @@ public class DailyWeatherFragment extends Fragment {
                 }
                 else {
 
-                    Toast.makeText(getContext(), "Error Connecting to Wifi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Error Connecting to internet", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(context, MainActivity.class);
                     startActivity(intent);
                 }
